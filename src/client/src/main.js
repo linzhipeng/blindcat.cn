@@ -6,6 +6,8 @@ import Topbar from './components/Topbar.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
+import store from './vuex/store'
+
 // 注册插件
 Vue.use(VueResource)
 Vue.use(VueRouter)
@@ -54,44 +56,6 @@ var routes = [{
 var router = new VueRouter({
   routes,
   mode: 'history'
-})
-
-// 全局Vuex
-const store = new Vuex.Store({
-  strict: true,
-  state: {
-    // 导航条数据
-    topbar_data: [{
-      name: '首页',
-      url: '',
-      routerName: 'home'
-    }, {
-      name: '分类',
-      url: 'tags',
-      routerName: 'tags'
-    }, {
-      name: '归档',
-      url: 'archive',
-      routerName: 'archive'
-    }, {
-      name: '资源',
-      url: 'resources',
-      routerName: 'resources'
-    }, {
-      name: '搜索',
-      url: 'search',
-      routerName: 'search'
-    }, {
-      name: '关于',
-      url: 'about',
-      routerName: 'about'
-    }]
-  },
-  mutations: {
-    addCount (state) {
-      state.count++
-    }
-  }
 })
 
 /* eslint-disable no-new */

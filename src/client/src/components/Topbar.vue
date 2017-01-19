@@ -5,7 +5,7 @@
     </div>
     <!-- 为根路由导航设置exact属性true -->
     <ul id="topbar">
-      <li v-for="topbar_item in topbar_data">
+      <li v-for="topbar_item in topbarData">
         <router-link 
           :to="{name: topbar_item.routerName}" 
           :class="$route.name" 
@@ -20,11 +20,11 @@
 </template>
 
 <script type="text/javascript">
-  import { mapState } from 'Vuex'
+  import { mapGetters } from 'Vuex'
   export default {
     name: 'Topbar',
-    computed: mapState({
-      topbar_data: state => state.topbar_data
+    computed: mapGetters({
+      topbarData: 'topbarData'
     })
   }
 </script>
