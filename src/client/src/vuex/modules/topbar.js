@@ -24,6 +24,10 @@ const state = {
     name: '关于',
     url: 'about',
     routerName: 'about'
+  }, {
+    name: '登录',
+    url: 'login',
+    routerName: 'login'
   }]
 }
 

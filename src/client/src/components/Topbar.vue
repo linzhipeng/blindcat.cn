@@ -42,7 +42,7 @@
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    flex-wrap: nowrap;
+    /*flex-wrap: nowrap;*/
     justify-content: center;
   }
 
@@ -58,7 +58,6 @@
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    flex-wrap: nowrap;
     justify-content: center;
 
     border-bottom: 1px solid #ccc;
@@ -82,14 +81,14 @@
     line-height: 40px;
     text-align: center;
     color: #333;
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 600;
     text-decoration: none;
   }
 
   #topbar li a.router-link-active {
     color: #41b883;
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 700;
   }
 

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import App from './App'
 import Topbar from './components/Topbar.vue'
+import ArticleList from './components/ArticleList.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
@@ -19,7 +20,8 @@ var routes = [{
   exact: true,
   name: 'home',
   components: {
-    Topbar
+    Topbar,
+    ArticleList
   }
 }, {
   path: '/tags',
@@ -48,6 +50,12 @@ var routes = [{
 }, {
   path: '/about',
   name: 'about',
+  components: {
+    Topbar
+  }
+}, {
+  path: '/login',
+  name: 'login',
   components: {
     Topbar
   }
