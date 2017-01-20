@@ -20,7 +20,7 @@
 </template>
 
 <script type="text/javascript">
-  import { mapGetters } from 'Vuex'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'Topbar',
     computed: mapGetters({

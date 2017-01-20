@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'Vuex'
+import Vuex from 'vuex'
 import topbarData from './modules/topbar'
 Vue.use(Vuex)
 
