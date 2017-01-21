@@ -1,11 +1,10 @@
-<i class="icon iconfont icon-close"></i>
 <template>
   <div id="ArticleList">
     <ul>
       <li class="one_list">
         <img class="list_img" src="../assets/blindcat.jpg" alt="">
         <div class="list_text">
-          <a class="title" href="#">【原创】这些年，前端开发已然今非昔比 | 百码山庄</a>
+          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
           <div class="tip">
             <div class="tip_btn">
               <i class="iconfont icon-time"></i>2017-1-20
@@ -21,7 +20,53 @@
             </div>
           </div>
           <p class="context">
-            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。 诚然，让时光倒流几年，回到div+css刚刚统治网页设计前端领...
+            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
+          </p>
+        </div>
+      </li>
+      <li class="one_list">
+        <img class="list_img" src="../assets/blindcat.jpg" alt="">
+        <div class="list_text">
+          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
+          <div class="tip">
+            <div class="tip_btn">
+              <i class="iconfont icon-time"></i>2017-1-20
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-myshape"></i>瞎猫
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-information"></i>23
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-collect"></i>34
+            </div>
+          </div>
+          <p class="context">
+            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
+          </p>
+        </div>
+      </li>
+      <li class="one_list">
+        <img class="list_img" src="../assets/blindcat.jpg" alt="">
+        <div class="list_text">
+          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
+          <div class="tip">
+            <div class="tip_btn">
+              <i class="iconfont icon-time"></i>2017-1-20
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-myshape"></i>瞎猫
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-information"></i>23
+            </div>
+            <div class="tip_btn">
+              <i class="iconfont icon-collect"></i>34
+            </div>
+          </div>
+          <p class="context">
+            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
           </p>
         </div>
       </li>
@@ -43,7 +88,7 @@
   }
 
   .one_list {
-    padding: 1rem 1rem;
+    padding: 2rem 1rem;
     border-bottom: 1px solid #ccc;
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
@@ -54,24 +99,25 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  /*列表左图*/
+  /*列表左图 11rem * 14rem */
   .list_img {
     height: 11rem;
     flex: 0 1 14rem;
+    border: 1px solid #eee;
     margin: 0 2rem;
+    overflow: hidden;
   }
   /*列表右板块*/
   .list_text {
-    width: 43rem;
     max-width: 110rem;
-    flex: 1 1 auto;
+    flex: 1 1 40rem;
   }
   /*文章标题*/
   .title {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 700;
     line-height: 3rem;
-    color: #333;
+    color: #555;
     text-decoration: none;
   }
 
@@ -91,9 +137,9 @@
   }
 
   .tip_btn {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 2.8rem;
-    color: #777;
+    color: #999;
     margin-right: 1.5rem;
   }
 
@@ -102,8 +148,8 @@
   }
   /*文章内容*/
   .context {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     line-height: 2rem;
-    color: #333;
+    color: #999;
   }
 </style>

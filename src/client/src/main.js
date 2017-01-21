@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import App from './App'
 import Topbar from './components/Topbar.vue'
 import ArticleList from './components/ArticleList.vue'
+import TagsList from './components/TagsList.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
@@ -21,7 +22,8 @@ var routes = [{
   name: 'home',
   components: {
     Topbar,
-    ArticleList
+    ArticleList,
+    TagsList
   }
 }, {
   path: '/tags',
@@ -71,5 +73,7 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 }).$mount('#app')
