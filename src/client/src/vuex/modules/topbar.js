@@ -28,15 +28,46 @@ const state = {
     name: '登录',
     url: 'login',
     routerName: 'login'
-  }]
+  }],
+  screenWidth: '',
+  topbarName: 'Topbar',
+  topbarHasShow: false
 }
 
 // getters
 const getters = {
-  topbarData: state => state.topbarData
+  topbarData: state => state.topbarData,
+  screenWidth: state => state.screenWidth,
+  topbarName: state => state.topbarName,
+  topbarHasShow: state => state.topbarHasShow
+}
+
+const mutations = {
+  screenWidth (state, width) {
+    state.screenWidth = width
+    // 屏幕宽度小于550像素时，更换手机导航条组件
+    if (width < 550) {
+      state.topbarName = 'TopbarMobile'
+    } else {
+      state.topbarName = 'Topbar'
+      state.topbarHasShow = false
+    }
+  },
+  topbarToggle (state) {
+    state.topbarHasShow = !state.topbarHasShow
+  }
+}
+
+// actions
+const actions = {
+  screenWidth (context, width) {
+    context.commit('screenWidth', width.width)
+  }
 }
 
 export default {
   state,
-  getters
+  getters,
+  mutations,
+  actions
 }

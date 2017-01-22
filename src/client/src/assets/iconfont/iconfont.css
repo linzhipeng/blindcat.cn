@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1484928456871'); /* IE9*/
-  src: url('iconfont.eot?t=1484928456871#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1484928456871') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1484928456871') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1484928456871#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1485099223204'); /* IE9*/
+  src: url('iconfont.eot?t=1485099223204#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1485099223204') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1485099223204') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1485099223204#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -42,6 +42,8 @@
 .icon-information:before { content: "\e7e6"; }
 
 .icon-discovery2shape-copy:before { content: "\e82c"; }
+
+.icon-icon21:before { content: "\e82f"; }
 
 .icon-icon2:before { content: "\e830"; }
 

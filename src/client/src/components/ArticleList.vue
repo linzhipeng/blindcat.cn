@@ -82,7 +82,6 @@
 
 <!-- 添加 "scoped" 属性使该css样式仅作用于该组件 -->
 <style scoped>
-  @import '../assets/iconfont/iconfont.css';
   #ArticleList {
     width: 100%;
   }

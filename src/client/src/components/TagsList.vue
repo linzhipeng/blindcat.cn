@@ -64,7 +64,7 @@
     text-align: center;
     border: 1px solid #41b883;
     color: #41b883;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 1.8rem;
     border-radius: 4px;
     padding: 0.2rem 0.8rem;

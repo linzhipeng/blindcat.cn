@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="topbar_box">
     <div id="logo_box">
       <img src="../assets/blindcat.jpg">
     </div>
@@ -14,7 +14,6 @@
           {{ topbar_item.name }}
         </router-link>
       </li>
-      <div class="clear"></div>
     </ul>
   </div>
 </template>
@@ -31,8 +30,8 @@
 
 <!-- 添加 "scoped" 属性使该css样式仅作用于该组件 -->
 <style scoped>
-  .clear {
-    clear: both;
+  .topbar_box {
+    border-bottom: 1px solid #ccc;
   }
 
   #logo_box{
@@ -59,8 +58,6 @@
     display: -webkit-flex;     /* NEW - Chrome */
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
     justify-content: center;
-
-    border-bottom: 1px solid #ccc;
   }
 
   #topbar li {
