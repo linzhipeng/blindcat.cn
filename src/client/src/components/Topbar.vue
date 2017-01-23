@@ -1,10 +1,16 @@
 <template>
   <div class="topbar_box">
-    <div id="logo_box">
-      <img src="../assets/blindcat.jpg">
+    <div id="logo_box" :class="topbarMobile ? 'justify_content_space_between' : 'justify_content_center'">
+      <a v-if="topbarMobile" @click="siderbarToggle" class="show_list_btn">
+        <i class="iconfont icon-icon21"></i>
+      </a>
+      <img src="../assets/blindcat.jpg" :class="topbarMobile ? 'img_small' : ''">
+      <a v-if="topbarMobile" href="#" class="search_btn">
+        <i class="iconfont icon-search"></i>
+      </a>
     </div>
     <!-- 为根路由导航设置exact属性true -->
-    <ul id="topbar">
+    <ul id="topbar" v-if="!topbarMobile">
       <li v-for="topbar_item in topbarData">
         <router-link 
           :to="{name: topbar_item.routerName}" 
@@ -19,12 +25,21 @@
 </template>
 
 <script type="text/javascript">
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   export default {
     name: 'Topbar',
-    computed: mapGetters({
-      topbarData: 'topbarData'
-    })
+    computed: {
+      ...mapGetters({
+        topbarData: 'topbarData',
+        screenWidth: 'screenWidth',
+        topbarMobile: 'topbarMobile'
+      })
+    },
+    methods: {
+      ...mapMutations([
+        'siderbarToggle'
+      ])
+    }
   }
 </script>
 
@@ -42,12 +57,40 @@
     display: -webkit-flex;     /* NEW - Chrome */
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
     /*flex-wrap: nowrap;*/
+  }
+
+  #logo_box.justify_content_center {
     justify-content: center;
+  }
+
+  #logo_box.justify_content_space_between {
+    justify-content: space-between;
+  }
+
+  .show_list_btn, .search_btn {
+    line-height: 50px;
+    padding: 0 15px;
+    text-decoration: none;
+  }
+
+  .show_list_btn i.iconfont, .search_btn i.iconfont {
+    font-size: 1.6rem;
+  }
+
+  .show_list_btn:hover, .search_btn:hover {
+    text-decoration: none;
   }
 
   #logo_box img{
     width: 150px;
     height: 150px;
+    transition: all .7s;
+    -webkit-transition: all .7s;
+  }
+
+  #logo_box img.img_small{
+    width: 50px;
+    height: 50px;
   }
 
   #topbar {

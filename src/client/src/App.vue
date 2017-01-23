@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view name="Siderbar"></router-view>
-    <router-view :name="topbarName"></router-view>
+    <router-view name="Topbar"></router-view>
     <div class="main">
       <div class="left_box">
         <router-view name="ArticleList"></router-view>

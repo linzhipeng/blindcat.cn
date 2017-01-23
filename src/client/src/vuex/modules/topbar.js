@@ -33,7 +33,7 @@ const state = {
   // 当前屏幕宽度
   screenWidth: '',
   // 当前使用的导航条类型【Topbar/TopbarMobile】
-  topbarName: 'Topbar',
+  topbarMobile: false,
   // 是否显示siderbar
   siderbarShow: false
 }
@@ -42,7 +42,7 @@ const state = {
 const getters = {
   topbarData: state => state.topbarData,
   screenWidth: state => state.screenWidth,
-  topbarName: state => state.topbarName,
+  topbarMobile: state => state.topbarMobile,
   siderbarShow: state => state.siderbarShow
 }
 
@@ -51,9 +51,9 @@ const mutations = {
   screenWidth (state, width) {
     state.screenWidth = width
     if (width < 550) { // 屏幕宽度小于550像素时，更换手机导航条组件
-      state.topbarName = 'TopbarMobile'
+      state.topbarMobile = true
     } else {
-      state.topbarName = 'Topbar'
+      state.topbarMobile = false
       state.siderbarShow = false // 宽度大于550像素时自动关闭siderbar
     }
   },

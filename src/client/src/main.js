@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 
 import App from './App'
 import Topbar from './components/Topbar.vue'
-import TopbarMobile from './components/TopbarMobile.vue'
 import Siderbar from './components/Siderbar.vue'
 import ArticleList from './components/ArticleList.vue'
 import TagsList from './components/TagsList.vue'
@@ -24,7 +23,6 @@ var routes = [{
   name: 'home',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar,
     ArticleList,
     TagsList
@@ -34,7 +32,6 @@ var routes = [{
   name: 'tags',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }, {
@@ -42,7 +39,6 @@ var routes = [{
   name: 'archive',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }, {
@@ -50,7 +46,6 @@ var routes = [{
   name: 'resources',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }, {
@@ -58,7 +53,6 @@ var routes = [{
   name: 'search',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }, {
@@ -66,7 +60,6 @@ var routes = [{
   name: 'about',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }, {
@@ -74,7 +67,6 @@ var routes = [{
   name: 'login',
   components: {
     Topbar,
-    TopbarMobile,
     Siderbar
   }
 }]
