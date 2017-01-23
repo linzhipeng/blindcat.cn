@@ -1,10 +1,10 @@
 <template>
   <transition name="siderbar">
-    <div class="siderbar" v-if="topbarHasShow">
-      <div class="mask" @click="topbarToggle"></div>
+    <div class="siderbar" v-if="siderbarShow">
+      <div class="mask" @click="siderbarClose"></div>
       <!-- 为根路由导航设置exact属性true -->
       <ul>
-        <li v-for="topbar_item in topbarData">
+        <li v-for="topbar_item in topbarData" @click="siderbarToggle" >
           <router-link 
             :to="{name: topbar_item.routerName}" 
             :class="$route.name" 
@@ -26,12 +26,13 @@
       ...mapGetters({
         topbarData: 'topbarData',
         screenWidth: 'screenWidth',
-        topbarHasShow: 'topbarHasShow'
+        siderbarShow: 'siderbarShow'
       })
     },
     methods: {
       ...mapMutations([
-        'topbarToggle'
+        'siderbarToggle',
+        'siderbarClose'
       ])
     }
   }
@@ -43,18 +44,18 @@
     position: fixed;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,0.5);
     width: 100%;
     height: 100%;
   }
 
   .mask {
-    width: 100%;
+    width: 200%;
     height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 14rem;
     z-index: -10;
+    background-color: rgba(0,0,0,0.6);
   }
 
   .siderbar ul {
@@ -76,7 +77,7 @@
     width: 100%;
     height: 100%;
     line-height: 3.5rem;
-    color: #333;
+    color: #555;
     font-size: 1.6rem;
     font-weight: 600;
     text-decoration: none;
@@ -94,9 +95,10 @@
   }
 
   .siderbar-enter-active, .siderbar-leave-active {
-    transition: opacity .5s
+    transition: left .4s, opacity .4s;
   }
-  .siderbar-enter, .siderbar-leave-to /* .fade-leave-active in <2.1.8 */ {
-    opacity: 0
+  .siderbar-enter, .siderbar-leave-to {
+    left: -100%;
+    opacity: 0;
   }
 </style>

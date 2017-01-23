@@ -1,7 +1,7 @@
 <template>
   <div class="topbar_box">
     <div id="logo_box">
-      <a @click="topbarToggle" class="show_list_btn">
+      <a @click="siderbarToggle" class="show_list_btn">
         <i class="iconfont icon-icon21"></i>
       </a>
       <img src="../assets/blindcat.jpg">
@@ -20,12 +20,12 @@
       ...mapGetters({
         topbarData: 'topbarData',
         screenWidth: 'screenWidth',
-        topbarHasShow: 'topbarHasShow'
+        siderbarShow: 'siderbarShow'
       })
     },
     methods: {
       ...mapMutations([
-        'topbarToggle'
+        'siderbarToggle'
       ])
     }
   }

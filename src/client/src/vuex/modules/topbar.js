@@ -1,5 +1,6 @@
 // topbar
 const state = {
+  // 导航条菜单数据
   topbarData: [{
     name: '首页',
     url: '',
@@ -29,9 +30,12 @@ const state = {
     url: 'login',
     routerName: 'login'
   }],
+  // 当前屏幕宽度
   screenWidth: '',
+  // 当前使用的导航条类型【Topbar/TopbarMobile】
   topbarName: 'Topbar',
-  topbarHasShow: false
+  // 是否显示siderbar
+  siderbarShow: false
 }
 
 // getters
@@ -39,27 +43,33 @@ const getters = {
   topbarData: state => state.topbarData,
   screenWidth: state => state.screenWidth,
   topbarName: state => state.topbarName,
-  topbarHasShow: state => state.topbarHasShow
+  siderbarShow: state => state.siderbarShow
 }
 
 const mutations = {
+  // 获取屏幕宽度，根据宽度切换导航条组件
   screenWidth (state, width) {
     state.screenWidth = width
-    // 屏幕宽度小于550像素时，更换手机导航条组件
-    if (width < 550) {
+    if (width < 550) { // 屏幕宽度小于550像素时，更换手机导航条组件
       state.topbarName = 'TopbarMobile'
     } else {
       state.topbarName = 'Topbar'
-      state.topbarHasShow = false
+      state.siderbarShow = false // 宽度大于550像素时自动关闭siderbar
     }
   },
-  topbarToggle (state) {
-    state.topbarHasShow = !state.topbarHasShow
+  // 切换siderbar状态
+  siderbarToggle (state) {
+    state.siderbarShow = !state.siderbarShow
+  },
+  // 关闭siderbar
+  siderbarClose (state) {
+    state.siderbarShow = false
   }
 }
 
 // actions
 const actions = {
+  // 计算屏幕宽度
   screenWidth (context, width) {
     context.commit('screenWidth', width.width)
   }
