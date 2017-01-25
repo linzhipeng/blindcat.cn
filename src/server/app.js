@@ -12,6 +12,7 @@ var router = express.Router()
 
 // 路由转发
 var index = require('./routers/index.server.router')
+var article = require('./routers/article.server.router')
 
 // 使用中间件
 app.use('/static', express.static(__dirname + '/public')) // 指定public为静态文件目录
@@ -21,8 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // 监听请求并转发
 app.use('/', index)
+app.use('/article', article)
 
-// 监听3000端口
+// 监听端口
 app.listen(config.port, function () {
 	console.log('listening on port '+ config.port +'!')
 })

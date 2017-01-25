@@ -12,5 +12,8 @@ module.exports = function(){
 	dbDoc.once('open', function() {
 		console.log("mongoDB has been connected");
 	})
+
+	// 使用数据模板
+	require('../models/article.server.model.js')
 	return db
 }
