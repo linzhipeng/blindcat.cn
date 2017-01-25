@@ -4,8 +4,8 @@ var bodyParser = require('body-parser')
 var config = require('./config/config.js')
 
 // 引入mongoose模块配置并连接数据库
-// var mongoose = require('./config/mongoose.js')
-// mongoose()
+var mongoose = require('./config/mongoose.js')
+mongoose()
 
 var app = express()
 var router = express.Router()

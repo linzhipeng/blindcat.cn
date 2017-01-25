@@ -4,7 +4,7 @@ module.exports = {
 	// 当前的域名
 	domain: 'http://localhost',
 	// 数据库地址
-	mongodb: 'mongodb://localhost/test',
+	mongodb: 'mongodb://blindcatvue:blindcatVue@localhost/vue',
 	// 登录session配置
 	loginSession: {
 		secret: 'blindcat',
