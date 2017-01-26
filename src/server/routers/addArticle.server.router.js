@@ -29,14 +29,13 @@ router
 			tags: req.body.tags,
 			type: req.body.type,
 		})
-		console.log(saveData)
-		// saveData.save(function(err){
-		// 	if (err) return handleError(err);
-		// 	res.send({
-		// 		'state': true
-		// 	});
-		// })
-		res.redirect('../article');
+		saveData.save(function(err){
+			if (err) return handleError(err);
+			res.send({
+				'state': true
+			});
+			res.redirect('../article')
+		})
 	})
 
 module.exports = router;
