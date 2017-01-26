@@ -1,5 +1,6 @@
 var express = require('express')
 var path = require('path')
+var hbs = require('hbs');
 var bodyParser = require('body-parser')
 var config = require('./config/config.js')
 
@@ -13,6 +14,12 @@ var router = express.Router()
 // 路由转发
 var index = require('./routers/index.server.router')
 var article = require('./routers/article.server.router')
+var addArticle = require('./routers/addArticle.server.router')
+
+// 设置使用handels模板引擎
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 // 使用中间件
 app.use('/static', express.static(__dirname + '/public')) // 指定public为静态文件目录
@@ -23,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // 监听请求并转发
 app.use('/', index)
 app.use('/article', article)
+app.use('/addarticle', addArticle)
 
 // 监听端口
 app.listen(config.port, function () {

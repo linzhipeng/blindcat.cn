@@ -16,19 +16,21 @@ var data
 router
 	.get('/', function(req, res){
 		// var saveData = new article({
-		// 	title: '文章标题',
-		// 	content: '##这个是文章的内容',
-		// 	abstract: '这个是文章摘要',
-		// 	tags: '前端',
-		// 	type: 'JavaScript',
+		// 	title: '文章标题2',
+		// 	content: '##这个又是文章的内容',
+		// 	abstract: '这个又是文章摘要',
+		// 	tags: '后端',
+		// 	type: 'Node',
 		// })
 		// saveData.save(function(err){
 		// 	if (err) return handleError(err);
 		// })
 		console.log(parseInt(req.query.page) || 1)
 		article
-			.find({})
-			.limit(10)
+			.find(['title', 'content', 'abstract'])
+			// .skip(1)
+			// .limit(10)
+			.select('title content abstract')
 			.exec(function(err, aticle){
 				if(err) return handleError(err);
 				data = {
