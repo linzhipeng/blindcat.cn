@@ -1,13 +1,13 @@
 <template>
   <div id="ArticleList">
     <ul>
-      <li class="one_list">
+      <li class="one_list" v-for="item in articleList">
         <img class="list_img" src="../assets/blindcat.jpg" alt="">
         <div class="list_text">
-          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
+          <a class="title" href="#">{{ item.title }}</a>
           <div class="tip">
             <div class="tip_btn">
-              <i class="iconfont icon-time"></i>2017-1-20
+              <i class="iconfont icon-time"></i>{{ item.publishTime }}
             </div>
             <div class="tip_btn">
               <i class="iconfont icon-myshape"></i>瞎猫
@@ -16,57 +16,11 @@
               <i class="iconfont icon-information"></i>23
             </div>
             <div class="tip_btn">
-              <i class="iconfont icon-collect"></i>34
+              <i class="iconfont icon-collect"></i>{{ item.aticleCollect }}
             </div>
           </div>
           <p class="context">
-            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
-          </p>
-        </div>
-      </li>
-      <li class="one_list">
-        <img class="list_img" src="../assets/blindcat.jpg" alt="">
-        <div class="list_text">
-          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
-          <div class="tip">
-            <div class="tip_btn">
-              <i class="iconfont icon-time"></i>2017-1-20
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-myshape"></i>瞎猫
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-information"></i>23
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-collect"></i>34
-            </div>
-          </div>
-          <p class="context">
-            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
-          </p>
-        </div>
-      </li>
-      <li class="one_list">
-        <img class="list_img" src="../assets/blindcat.jpg" alt="">
-        <div class="list_text">
-          <a class="title" href="#">这些年，前端开发已然今非昔比 | 百码山庄</a>
-          <div class="tip">
-            <div class="tip_btn">
-              <i class="iconfont icon-time"></i>2017-1-20
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-myshape"></i>瞎猫
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-information"></i>23
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-collect"></i>34
-            </div>
-          </div>
-          <p class="context">
-            多年前，有知名企业前端前辈如是说：前端是做什么的？在一个网页上你看到的就是前端工程师做的。也有人说：前端是设计师在UED最亲密的合作伙伴。很显然，这些概念放之今日都显得太片面。
+            {{ item.abstract }}
           </p>
         </div>
       </li>
@@ -75,8 +29,22 @@
 </template>
 
 <script type="text/javascript">
+  import { mapActions, mapGetters } from 'vuex'
   export default {
-    name: 'ArticleList'
+    name: 'ArticleList',
+    computed: {
+      ...mapGetters({
+        articleList: 'articleList'
+      })
+    },
+    methods: {
+      ...mapActions([
+        'initArticleList'
+      ])
+    },
+    created () {
+      this.initArticleList()
+    }
   }
 </script>
 

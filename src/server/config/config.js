@@ -1,6 +1,6 @@
 module.exports = {
 	// 服务器监听地址
-	port: 8080,
+	port: 8081,
 	// 当前的域名
 	domain: 'http://localhost',
 	// 数据库地址

@@ -1,5 +1,5 @@
 # 瞎猫的Node + Vue单页应用开发
-**进度：10%**
+**进度：15%**
 
 ## 前端演示地址
 [http://blindcat.cn](http://blindcat.cn)
@@ -18,6 +18,7 @@ npm install
 # 使用webpack打包build
 npm run build
 ```
+访问 `src/client/dist/index.html`
 
 ## 后端安装
 
@@ -31,3 +32,4 @@ npm install
 # 运行
 node app
 ```
+访问 `src/client/dist/index.html`

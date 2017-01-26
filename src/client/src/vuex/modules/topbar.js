@@ -1,4 +1,5 @@
-// topbar
+// 导航条
+
 const state = {
   // 导航条菜单数据
   topbarData: [{
@@ -46,23 +47,24 @@ const getters = {
   siderbarShow: state => state.siderbarShow
 }
 
+// mutations
 const mutations = {
-  // 获取屏幕宽度，根据宽度切换导航条组件
   screenWidth (state, width) {
+    // 根据屏幕宽度，更新state.screenWidth、切换导航条类型、选择是否显示siderbar
     state.screenWidth = width
-    if (width < 550) { // 屏幕宽度小于550像素时，更换手机导航条组件
+    if (width < 550) { // 屏幕宽度小于550像素时，切换导航条类型
       state.topbarMobile = true
     } else {
       state.topbarMobile = false
       state.siderbarShow = false // 宽度大于550像素时自动关闭siderbar
     }
   },
-  // 切换siderbar状态
   siderbarToggle (state) {
+    // 切换siderbar状态
     state.siderbarShow = !state.siderbarShow
   },
-  // 关闭siderbar
   siderbarClose (state) {
+    // 关闭siderbar
     state.siderbarShow = false
   }
 }
