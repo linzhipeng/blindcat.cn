@@ -52,7 +52,7 @@ const actions = {
   // 初始化文章列表
   initArticleList (context) {
     axios
-      .get('http://localhost:8081/article')
+      .get('http://api.blindcat.cn/article')
       .then(function (res) {
         if (res && res.data.state) {
           context.commit('updateList', res.data.data)
@@ -64,7 +64,7 @@ const actions = {
   },
   // 提交新文章
   updateNewArticle (context) {
-    axios.post('http://localhost:8081/newarticle', {
+    axios.post('http://api.blindcat.cn/newarticle', {
       title: context.getters.newArticle.title,
       content: context.getters.newArticle.content,
       tags: context.getters.newArticle.tags,

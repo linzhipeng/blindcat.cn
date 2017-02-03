@@ -22,13 +22,14 @@ router
 		})
 	})
 	.post('/', function(req, res, next) {
+		var reg = /[\\\`\*\_\[\]\#\+\-\!\>]/g;
 		var saveData = new article({
 			title: req.body.title,
 			content: req.body.content,
 			tags: req.body.tags,
 			articleType: req.body.articleType,
 			creativeType: req.body.creativeType,
-			abstract: '123'
+			abstract: req.body.content.replace(reg, "")
 		})
 		saveData.save(function(err){
 			if (err) {
