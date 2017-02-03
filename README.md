@@ -32,4 +32,4 @@ npm install
 # 运行
 node app
 ```
-访问 `src/client/dist/index.html`
+访问 `localhost:8081`

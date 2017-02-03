@@ -1,3 +1,5 @@
+<!-- 热门标签 -->
+
 <template>
   <div id="TagsList">
     <div class="hot_tags">热门标签</div>

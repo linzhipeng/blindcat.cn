@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import topbarData from './modules/topbar'
-import articleList from './modules/articleList'
+import article from './modules/article'
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   modules: {
     topbarData,
-    articleList
+    article
   },
   strict: debug,
   middlewares: debug ? [] : []

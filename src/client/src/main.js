@@ -6,6 +6,7 @@ import Topbar from './components/Topbar.vue'
 import Siderbar from './components/Siderbar.vue'
 import ArticleList from './components/ArticleList.vue'
 import TagsList from './components/TagsList.vue'
+import NewArticle from './components/NewArticle.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
@@ -35,11 +36,12 @@ var routes = [{
     Siderbar
   }
 }, {
-  path: '/archive',
-  name: 'archive',
+  path: '/newarticle',
+  name: 'newarticle',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    NewArticle
   }
 }, {
   path: '/resources',

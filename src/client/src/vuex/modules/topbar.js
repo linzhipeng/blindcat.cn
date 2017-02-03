@@ -11,9 +11,9 @@ const state = {
     url: 'tags',
     routerName: 'tags'
   }, {
-    name: '归档',
-    url: 'archive',
-    routerName: 'archive'
+    name: '投稿',
+    url: 'newarticle',
+    routerName: 'newarticle'
   }, {
     name: '资源',
     url: 'resources',
