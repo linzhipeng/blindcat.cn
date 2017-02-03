@@ -5,10 +5,9 @@
     <input type="text" placeholder="标题" name="title" :value="newArticle.title" @input="recordNewArticle">
     <textarea placeholder="正文" name="content" :value="newArticle.content" @input="recordNewArticle"></textarea>
     <input type="text" placeholder="标签" name="tags" :value="newArticle.tags" @input="recordNewArticle">
-    <input type="text" placeholder="创作类型" name="CreativeType" :value="newArticle.CreativeType" @input="recordNewArticle">
-    <input type="text" placeholder="文章分类" name="type" :value="newArticle.type" @input="recordNewArticle">
+    <input type="text" placeholder="创作类型" name="creativeType" :value="newArticle.creativeType" @input="recordNewArticle">
+    <input type="text" placeholder="文章分类" name="articleType" :value="newArticle.articleType" @input="recordNewArticle">
     <input type="button" value="投稿" @click="updateNewArticle">
-    <h1>{{newArticle}}</h1>
   </div>
 </template>
 

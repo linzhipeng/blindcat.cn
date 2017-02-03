@@ -9,8 +9,8 @@ const state = {
     title: '',
     content: '',
     tags: '',
-    CreativeType: '',
-    type: ''
+    creativeType: '',
+    articleType: ''
   }
 }
 // getters
@@ -36,11 +36,11 @@ const mutations = {
       case 'tags':
         state.newArticle.tags = message.data
         break
-      case 'CreativeType':
-        state.newArticle.CreativeType = message.data
+      case 'creativeType':
+        state.newArticle.creativeType = message.data
         break
-      case 'type':
-        state.newArticle.type = message.data
+      case 'articleType':
+        state.newArticle.articleType = message.data
         break
       default:
         break
@@ -64,7 +64,21 @@ const actions = {
   },
   // 提交新文章
   updateNewArticle (context) {
-    console.log(context.getters.newArticle)
+    axios.post('http://localhost:8081/newarticle', {
+      title: context.getters.newArticle.title,
+      content: context.getters.newArticle.content,
+      tags: context.getters.newArticle.tags,
+      articleType: context.getters.newArticle.articleType,
+      creativeType: context.getters.newArticle.creativeType
+    })
+    .then(function (res) {
+      if (res && res.data.state) {
+        console.log('投稿成功')
+      }
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
 }
 

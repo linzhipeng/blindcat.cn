@@ -33,11 +33,11 @@ var articleSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	CreativeType: {// 创作类型
+	creativeType: {// 创作类型
 		type: String,
 		default: '原创'
 	},
-	type: { // 文章分类
+	articleType: { // 文章分类
 		type: String,
 		required: true
 	},

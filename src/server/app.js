@@ -23,7 +23,7 @@ app.all('*', function(req, res, next) {
 // 路由转发
 var index = require('./routers/index.server.router')
 var article = require('./routers/article.server.router')
-var addArticle = require('./routers/addArticle.server.router')
+var newArticle = require('./routers/newArticle.server.router')
 
 // 设置使用handels模板引擎
 app.set('views', path.join(__dirname, 'views'));
@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // 监听请求并转发
 app.use('/', index)
 app.use('/article', article)
-app.use('/addarticle', addArticle)
+app.use('/newarticle', newArticle)
 
 // 监听端口
 app.listen(config.port, function () {
