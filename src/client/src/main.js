@@ -9,6 +9,7 @@ import TagsList from './components/TagsList.vue'
 import NewArticle from './components/NewArticle.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import VueSimplemde from 'vue-simplemde' // markdown编辑器
 
 import store from './vuex/store'
 
@@ -16,6 +17,7 @@ import store from './vuex/store'
 Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VueSimplemde)
 
 // 路由
 var routes = [{
