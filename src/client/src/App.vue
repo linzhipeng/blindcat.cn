@@ -2,8 +2,15 @@
   <div id="app">
     <router-view name="Siderbar"></router-view>
     <router-view name="Topbar"></router-view>
-    <router-view name="NewArticle"></router-view>
-    <div class="main">
+    <!-- 1列布局居中容器 -->
+    <div class="main1">
+      <div class="container">
+        <router-view name="NewArticle"></router-view>
+      </div>
+    </div>
+    
+    <!-- 左右2列布局 -->
+    <div class="main2">
       <div class="left_box">
         <router-view name="ArticleList"></router-view>
       </div>
@@ -27,7 +34,7 @@ export default {
 
 <style scoped>
   @import './assets/iconfont/iconfont.css';
-  .main {
+  .main1, .main2 {
     margin-top: 2rem;
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
@@ -36,6 +43,11 @@ export default {
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .container {
+    max-width: 100rem;
+    flex: 1 1 auto;
+    overflow: hidden;
   }
   /*宽度小于67rem时候会换行*/
   .left_box {

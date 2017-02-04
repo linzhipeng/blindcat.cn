@@ -2,7 +2,7 @@
 
 <template>
   <div id="NewArticle">
-    <markdown-editor :configs="configs" :value="newArticle.content" @input="recordNewArticleContent"></markdown-editor>
+    <markdown-editor :configs="mdConfigs" :value="newArticle.content" @input="recordNewArticleContent" preview-class="markdown-body"></markdown-editor>
     <input type="text" placeholder="标题" name="title" :value="newArticle.title" @input="recordNewArticle">
     <!-- <textarea placeholder="正文" name="content" :value="newArticle.content" @input="recordNewArticle"></textarea> -->
     <input type="text" placeholder="标签" name="tags" :value="newArticle.tags" @input="recordNewArticle">
@@ -15,6 +15,7 @@
 <script type="text/javascript">
   import { mapGetters, mapActions } from 'vuex'
   import { markdownEditor } from 'vue-simplemde'
+  import 'github-markdown-css'
 
   export default {
     name: 'NewArticle',
@@ -23,7 +24,7 @@
     },
     data () {
       return {
-        configs: {
+        mdConfigs: {
           spellChecker: false, // 禁用拼写检查
           // initialValue: 'hellow', // 设置初始值
           renderingConfig: {
