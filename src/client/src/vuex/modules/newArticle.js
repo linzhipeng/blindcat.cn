@@ -1,5 +1,6 @@
 // 文章列表
 
+import globalConfig from '../../config/config.js'
 import axios from 'axios'
 const state = {
   // 文章投稿选项
@@ -77,7 +78,7 @@ const mutations = {
 const actions = {
   // 提交新文章
   updateNewArticle (context) {
-    axios.post('http://api.blindcat.cn/newarticle', {
+    axios.post(globalConfig.apiUrl + 'newarticle', {
       title: context.getters.newArticle.title,
       content: context.getters.newArticle.content,
       tags: context.getters.newArticle.tags,

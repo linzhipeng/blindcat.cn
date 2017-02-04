@@ -1,5 +1,6 @@
 // 文章列表
 
+import globalConfig from '../../config/config.js'
 import axios from 'axios'
 const state = {
   // 文章列表
@@ -21,7 +22,7 @@ const actions = {
   // 初始化文章列表
   initArticleList (context) {
     axios
-      .get('http://api.blindcat.cn/article')
+      .get(globalConfig.apiUrl + 'article')
       .then(function (res) {
         if (res && res.data.state) {
           context.commit('updateList', res.data.data)
