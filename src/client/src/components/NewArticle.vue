@@ -2,12 +2,17 @@
 
 <template>
   <div id="NewArticle">
-    <markdown-editor :configs="mdConfigs" :value="newArticle.content" @input="recordNewArticleContent" preview-class="markdown-body"></markdown-editor>
     <input type="text" placeholder="标题" name="title" :value="newArticle.title" @input="recordNewArticle">
-    <!-- <textarea placeholder="正文" name="content" :value="newArticle.content" @input="recordNewArticle"></textarea> -->
-    <input type="text" placeholder="标签" name="tags" :value="newArticle.tags" @input="recordNewArticle">
-    <input type="text" placeholder="创作类型" name="creativeType" :value="newArticle.creativeType" @input="recordNewArticle">
-    <input type="text" placeholder="文章分类" name="articleType" :value="newArticle.articleType" @input="recordNewArticle">
+    <markdown-editor :configs="mdConfigs" :value="newArticle.content" @input="recordNewArticleContent" preview-class="markdown-body"></markdown-editor>
+    <select name="articleType" :value="newArticle.articleType" @input="recordNewArticle">
+      <option value="" disabled>选择文章分类</option>
+      <option v-for="option in submission.articleType.options" :value="option.value">{{option.text}}</option>
+    </select>
+    <select name="creativeType" :value="newArticle.creativeType" @input="recordNewArticle">
+      <option value="" disabled>选择原创类型</option>
+      <option v-for="option in submission.creativeType.options" :value="option.value">{{option.text}}</option>
+    </select>
+    <input type="text" placeholder="标签（回车添加一个标签）" name="tags" :value="newArticle.tags" @input="recordNewArticle">
     <input type="button" value="投稿" @click="updateNewArticle">
   </div>
 </template>
@@ -37,6 +42,7 @@
     },
     computed: {
       ...mapGetters({
+        submission: 'submission',
         newArticle: 'newArticle'
       })
     },
@@ -63,5 +69,37 @@
 <style scoped>
   #NewArticle input {
     display: block;
+  }
+
+  input[type="text"], select {
+    display: block;
+    width: 90%;
+    max-width: 350px;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+  }
+
+  select {
+    width: 150px;
+  }
+
+  option {
+    height: 50px;
+    line-height: 50px;
+  }
+
+  input[type="button"] {
+    display: block;
+    background-color: #41b883;
+    color: #fff;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    margin-top: 10px;
   }
 </style>

@@ -3,48 +3,17 @@
 import axios from 'axios'
 const state = {
   // 文章列表
-  articleList: '',
-  // 新文章
-  newArticle: {
-    title: '',
-    content: '',
-    tags: '',
-    creativeType: '',
-    articleType: ''
-  }
+  articleList: ''
 }
 // getters
 const getters = {
-  articleList: state => state.articleList,
-  newArticle: state => state.newArticle
+  articleList: state => state.articleList
 }
 // mutations
 const mutations = {
   // 更新文章列表
   updateList (state, listData) {
     state.articleList = listData
-  },
-  // 添加新文章
-  recordNewArticle (state, message) {
-    switch (message.inputName) {
-      case 'title':
-        state.newArticle.title = message.data
-        break
-      case 'content':
-        state.newArticle.content = message.data
-        break
-      case 'tags':
-        state.newArticle.tags = message.data
-        break
-      case 'creativeType':
-        state.newArticle.creativeType = message.data
-        break
-      case 'articleType':
-        state.newArticle.articleType = message.data
-        break
-      default:
-        break
-    }
   }
 }
 // actions
@@ -61,24 +30,6 @@ const actions = {
       .catch(function (error) {
         console.log(error)
       })
-  },
-  // 提交新文章
-  updateNewArticle (context) {
-    axios.post('http://api.blindcat.cn/newarticle', {
-      title: context.getters.newArticle.title,
-      content: context.getters.newArticle.content,
-      tags: context.getters.newArticle.tags,
-      articleType: context.getters.newArticle.articleType,
-      creativeType: context.getters.newArticle.creativeType
-    })
-    .then(function (res) {
-      if (res && res.data.state) {
-        console.log('投稿成功')
-      }
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
   }
 }
 
