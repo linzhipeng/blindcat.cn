@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 const state = {
-  // 投稿选项
+  // 文章投稿选项
   submission: {
     articleType: {
       options: [
@@ -19,9 +19,10 @@ const state = {
         {text: '原创', value: '原创'},
         {text: '转载', value: '转载'}
       ]
-    }
+    },
+    newTag: ''
   },
-  // 新文章
+  // 新文章键入记录
   newArticle: {
     title: '',
     content: '',
@@ -37,7 +38,18 @@ const getters = {
 }
 // mutations
 const mutations = {
-  // 添加新文章
+  // 将新tag增加进tag数组
+  addTags (state) {
+    if (state.submission.newTag !== '') {
+      state.newArticle.tags.push(state.submission.newTag)
+      state.submission.newTag = ''
+    }
+  },
+  // 移除tag
+  removeTag (state, index) {
+    state.newArticle.tags.splice(index, 1)
+  },
+  // 记录新文章内容
   recordNewArticle (state, message) {
     switch (message.inputName) {
       case 'title':
@@ -45,9 +57,6 @@ const mutations = {
         break
       case 'content':
         state.newArticle.content = message.data
-        break
-      case 'tags':
-        state.newArticle.tags = message.data
         break
       case 'creativeType':
         state.newArticle.creativeType = message.data
@@ -58,6 +67,10 @@ const mutations = {
       default:
         break
     }
+  },
+  // 暂存键入的tag
+  recordNewArticleTag (state, newTag) {
+    state.submission.newTag = newTag
   }
 }
 // actions
