@@ -7,6 +7,7 @@ import Siderbar from './components/Siderbar.vue'
 import ArticleList from './components/ArticleList.vue'
 import TagsList from './components/TagsList.vue'
 import NewArticle from './components/NewArticle.vue'
+import TopTip from './components/TopTip.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueSimplemde from 'vue-simplemde' // markdown编辑器
@@ -27,6 +28,7 @@ var routes = [{
   components: {
     Topbar,
     Siderbar,
+    TopTip,
     ArticleList,
     TagsList
   }
@@ -35,7 +37,8 @@ var routes = [{
   name: 'tags',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    TopTip
   }
 }, {
   path: '/newarticle',
@@ -43,6 +46,7 @@ var routes = [{
   components: {
     Topbar,
     Siderbar,
+    TopTip,
     NewArticle
   }
 }, {
@@ -50,28 +54,32 @@ var routes = [{
   name: 'resources',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    TopTip
   }
 }, {
   path: '/search',
   name: 'search',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    TopTip
   }
 }, {
   path: '/about',
   name: 'about',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    TopTip
   }
 }, {
   path: '/login',
   name: 'login',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    TopTip
   }
 }]
 
