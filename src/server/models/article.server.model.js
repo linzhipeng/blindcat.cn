@@ -30,8 +30,7 @@ var articleSchema = new mongoose.Schema({
 		required: true
 	},
 	tags: { // 文章标签
-		type: String,
-		required: true
+		type: String
 	},
 	creativeType: {// 创作类型
 		type: String,

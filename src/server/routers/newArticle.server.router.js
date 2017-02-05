@@ -22,6 +22,47 @@ router
 		})
 	})
 	.post('/', function(req, res, next) {
+		if (req.body) {
+			if (!req.body.title || req.body.title === '') {
+				res.send({
+					'state': false,
+					'info': '文章标题不能为空'
+				})
+				return false
+			} else if (!req.body.content || req.body.content === '') {
+				res.send({
+					'state': false,
+					'info': '文章正文不能为空'
+				})
+				return false
+			} else if (!req.body.articleType || req.body.articleType === '') {
+				res.send({
+					'state': false,
+					'info': '文章分类不能为空'
+				})
+				return false
+			} else if (!req.body.creativeType || req.body.creativeType === '') {
+				req.body.creativeType = '原创'
+			}
+		} else {
+			return false
+		}
+		function stringMaxCut(str, maxNum){
+	        var len = 0;
+	        for (var i=0; i<str.length; i++) {  
+	            if (str.charCodeAt(i)>127 || str.charCodeAt(i)==94) {
+	                len += 2;
+	            } else {
+	                len ++;
+	            }
+	            if(len == maxNum){
+	                return str = str.slice(0, (i+1)) + '..';
+	            }else if(len == maxNum+1){
+	                return str = str.slice(0, i) + '..';
+	            }
+	        };
+	        return str;
+	    }
 		var reg = /[\\\`\*\_\[\]\#\+\-\!\>]/g;
 		var saveData = new article({
 			title: req.body.title,
@@ -29,7 +70,7 @@ router
 			tags: req.body.tags,
 			articleType: req.body.articleType,
 			creativeType: req.body.creativeType,
-			abstract: req.body.content.replace(reg, "")
+			abstract: stringMaxCut(req.body.content.replace(reg, ""), 250)
 		})
 		saveData.save(function(err){
 			if (err) {
