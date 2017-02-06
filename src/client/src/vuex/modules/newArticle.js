@@ -86,8 +86,12 @@ const actions = {
       creativeType: context.getters.newArticle.creativeType
     })
     .then(function (res) {
-      if (res && res.data.state) {
-        console.log('投稿成功')
+      if (res && res.data) {
+        if (res.data.state) {
+          context.dispatch('toggleTip', '投稿成功')
+        } else {
+          context.dispatch('toggleTip', res.data.info)
+        }
       }
     })
     .catch(function (error) {
