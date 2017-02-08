@@ -20,6 +20,7 @@ router
 			// .skip(1)
 			// .limit(10)
 			.select('title abstract publishTime readTimes aticleCollect likeNum')
+			.sort([['publishTime', -1]])
 			.exec(function(err, aticle){
 				if(err) return handleError(err);
 				data = {

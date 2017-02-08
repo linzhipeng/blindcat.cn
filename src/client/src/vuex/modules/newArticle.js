@@ -2,6 +2,7 @@
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
+import { Notification } from 'element-ui'
 const state = {
   // 文章投稿选项
   submission: {
@@ -28,12 +29,14 @@ const state = {
     creativeType: '',
     articleType: '',
     tags: []
-  }
+  },
+  isLoading: false
 }
 // getters
 const getters = {
   submission: state => state.submission,
-  newArticle: state => state.newArticle
+  newArticle: state => state.newArticle,
+  isLoading: state => state.isLoading
 }
 // mutations
 const mutations = {
@@ -66,12 +69,30 @@ const mutations = {
       default:
         break
     }
+  },
+  // 标记当前为文章提交loading状态
+  isLoading (state) {
+    state.isLoading = true
+  },
+  // 标记当前不是文章提交loading状态
+  notLoading (state) {
+    state.isLoading = false
+  },
+  clearArticleState (state) {
+    state.newArticle = {
+      title: '',
+      content: '',
+      creativeType: '',
+      articleType: '',
+      tags: []
+    }
   }
 }
 // actions
 const actions = {
   // 提交新文章
   updateNewArticle (context) {
+    context.commit('isLoading')
     axios.post(globalConfig.apiUrl + 'newarticle', {
       title: context.getters.newArticle.title,
       content: context.getters.newArticle.content,
@@ -80,11 +101,20 @@ const actions = {
       creativeType: context.getters.newArticle.creativeType
     })
     .then(function (res) {
+      context.commit('notLoading')
       if (res && res.data) {
         if (res.data.state) {
-          context.dispatch('toggleTip', '投稿成功')
+          Notification({
+            title: '成功',
+            message: '投稿成功！',
+            type: 'success'
+          })
         } else {
-          context.dispatch('toggleTip', res.data.info)
+          Notification({
+            title: '出错了',
+            message: res.data.info,
+            type: 'error'
+          })
         }
       }
     })

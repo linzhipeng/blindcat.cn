@@ -2,7 +2,6 @@
   <div id="app">
     <router-view name="Siderbar"></router-view>
     <router-view name="Topbar"></router-view>
-    <router-view name="TopTip"></router-view>
     <!-- 1列布局居中容器 -->
     <div class="main1">
       <div class="container">

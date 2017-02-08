@@ -72,13 +72,20 @@
       size="small"
       @click="showInput"
     >+ 添加标签</el-button>
-    <!-- 提交按钮 -->
+    <!-- 投稿按钮 -->
     <el-button
+      class="submit_btn"
+      type="primary"
+      :loading="true"
+      v-if="isLoading"
+    >正在投稿</el-button>
+    <el-button
+      v-else
       class="submit_btn"
       @click="updateNewArticle"
       type="primary"
       size="large"
-    >投稿</el-button>
+    >投稿<i class="el-icon-upload el-icon--right"></i></el-button>
   </div>
 </template>
 
@@ -111,7 +118,8 @@
     computed: {
       ...mapGetters({
         submission: 'submission',
-        newArticle: 'newArticle'
+        newArticle: 'newArticle',
+        isLoading: 'isLoading'
       })
     },
     methods: {
