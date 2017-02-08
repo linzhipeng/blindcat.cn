@@ -125,6 +125,7 @@
     color: #333;
     font-size: 1.6rem;
     font-weight: 600;
+    letter-spacing: 0.2rem;
     text-decoration: none;
   }
 

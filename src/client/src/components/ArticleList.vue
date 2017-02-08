@@ -84,7 +84,6 @@
   /*文章标题*/
   .title {
     font-size: 2.2rem;
-    font-weight: 700;
     line-height: 3rem;
     color: #555;
     text-decoration: none;
