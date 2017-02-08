@@ -23,12 +23,14 @@ const mutations = {
 }
 
 const actions = {
-  // 打开头部提示并在2s后关闭
+  // 打开头部提示并在3s后关闭
   toggleTip (context, tipWord) {
     context.commit('showTip', tipWord)
     setTimeout(() => {
-      context.commit('closeTip')
-    }, 2000)
+      if (context.state.isShow) {
+        context.commit('closeTip')
+      }
+    }, 3000)
   }
 }
 

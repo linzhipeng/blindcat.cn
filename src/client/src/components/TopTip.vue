@@ -1,12 +1,14 @@
 <!-- 顶部提示组件 -->
 
 <template>
-  <div id="TopTip" v-if="isShow">
-    <div class="word">{{ tipWord }}</div>
-    <div class="close_btn" @click="closeTip">
-      <i class="iconfont icon-close"></i>
+  <transition name="topTip">
+    <div id="TopTip" v-if="isShow">
+      <div class="word">{{ tipWord }}</div>
+      <div class="close_btn" @click="closeTip">
+        <i class="iconfont icon-close"></i>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script type="text/javascript">
@@ -28,9 +30,15 @@
 </script>
 
 <style scoped>
+  .topTip-enter-active, .topTip-leave-active {
+    transition: all 1.8s
+  }
+  .topTip-enter, .topTip-leave-to {
+    margin-top: -100%
+  }
   #TopTip {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 15px;
     left: 50%;
     transform: translate(-50%, 0);
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -41,11 +49,10 @@
     flex-wrap: nowrap;
     align-items: center;
     background-color: #fff;
-    border: 1px solid #ccc;
     border-top: none;
-    font-size: 1.5rem;
     letter-spacing: 0.1rem;
-    border-radius: 0 0 6px 6px;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
   }
 
   .word, .close_btn {
@@ -54,7 +61,8 @@
 
   .word {
     max-width: 200px;
-    padding: 13px 20px;
+    padding: 11px 10px;
+    font-size: 1.4rem;
   }
 
   .close_btn {

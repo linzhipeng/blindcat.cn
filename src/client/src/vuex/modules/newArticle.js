@@ -11,7 +11,6 @@ const state = {
         {text: '分享', value: '分享'},
         {text: '经验', value: '经验'},
         {text: '项目', value: '项目'},
-        {text: '资讯', value: '资讯'},
         {text: '无用技能', value: '无用技能'}
       ]
     },
@@ -20,8 +19,7 @@ const state = {
         {text: '原创', value: '原创'},
         {text: '转载', value: '转载'}
       ]
-    },
-    newTag: ''
+    }
   },
   // 新文章键入记录
   newArticle: {
@@ -40,10 +38,10 @@ const getters = {
 // mutations
 const mutations = {
   // 将新tag增加进tag数组
-  addTags (state) {
-    if (state.submission.newTag !== '') {
-      state.newArticle.tags.push(state.submission.newTag)
-      state.submission.newTag = ''
+  addTags (state, newTag) {
+    if (newTag !== '') {
+      state.newArticle.tags.push(newTag)
+      newTag = ''
     }
   },
   // 移除tag
@@ -68,10 +66,6 @@ const mutations = {
       default:
         break
     }
-  },
-  // 暂存键入的tag
-  recordNewArticleTag (state, newTag) {
-    state.submission.newTag = newTag
   }
 }
 // actions

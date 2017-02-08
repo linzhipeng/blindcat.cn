@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+
 import App from './App'
 import Topbar from './components/Topbar.vue'
 import Siderbar from './components/Siderbar.vue'
@@ -19,6 +22,7 @@ Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueSimplemde)
+Vue.use(ElementUI)
 
 // 路由
 var routes = [{
