@@ -15,19 +15,22 @@ router.use(bodyParser.urlencoded({ extended: true }))
 var data
 router
 	.get('/', function(req, res){
-		article
-			.find(['title', 'content', 'abstract'])
-			// .skip(1)
-			// .limit(10)
-			.select('_id title abstract publishTime readTimes aticleCollect likeNum')
-			.sort([['publishTime', -1]])
-			.exec(function(err, aticle){
-				if(err) return handleError(err);
-				data = {
-					'state': true,
-					'data': aticle
-				}
+		if (req.query.id && req.query.id !== ''){
+			article
+				.findOne({'_id': req.query.id})
+				.exec(function(err, articleData){
+					if(err) return handleError(err);
+					data = {
+						'state': true,
+						'data': articleData
+					}
+					res.send(data)
+				})
+		} else {
+			res.send({
+				'state': false,
+				'info': '未收到请求id'
 			})
-		res.send(data)
+		}
 	})
 module.exports = router

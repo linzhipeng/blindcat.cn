@@ -24,6 +24,7 @@ app.all('*', function(req, res, next) {
 var index = require('./routers/index.server.router')
 var article = require('./routers/article.server.router')
 var newArticle = require('./routers/newArticle.server.router')
+var articleDetail = require('./routers/articleDetail.server.router')
 
 // 设置使用handels模板引擎
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', index)
 app.use('/article', article)
 app.use('/newarticle', newArticle)
+app.use('/articledetail', articleDetail)
 
 // 监听端口
 app.listen(config.port, function () {

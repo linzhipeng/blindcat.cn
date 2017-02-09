@@ -6,6 +6,7 @@
     <div class="main1">
       <div class="container">
         <router-view name="NewArticle"></router-view>
+        <router-view name="ArticleDetail"></router-view>
       </div>
     </div>
     

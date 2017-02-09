@@ -4,17 +4,22 @@ import globalConfig from '../../config/config.js'
 import axios from 'axios'
 const state = {
   // 文章列表
-  articleList: ''
+  articleList: '',
+  articleNow: ''
 }
 // getters
 const getters = {
-  articleList: state => state.articleList
+  articleList: state => state.articleList,
+  articleNow: state => state.articleNow
 }
 // mutations
 const mutations = {
-  // 更新文章列表
+  // 更新文章列表state数据
   updateList (state, listData) {
     state.articleList = listData
+  },
+  updateArticleDetail (state, articleData) {
+    state.articleNow = articleData
   }
 }
 // actions
@@ -30,6 +35,15 @@ const actions = {
       })
       .catch(function (error) {
         console.log(error)
+      })
+  },
+  getArticleDetail (context, id) {
+    axios
+      .get(globalConfig.apiUrl + 'articledetail?id=' + id)
+      .then(function (res) {
+        if (res && res.data.state) {
+          context.commit('updateArticleDetail', res.data.data)
+        }
       })
   }
 }

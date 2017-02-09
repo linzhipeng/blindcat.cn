@@ -6,7 +6,12 @@
       <li class="one_list" v-for="item in articleList">
         <img class="list_img" src="../assets/blindcat.jpg" alt="">
         <div class="list_text">
-          <a class="title" href="#">{{ item.title }}</a>
+          <router-link 
+            :to="'/articledetail/' + item._id" 
+            class="title"
+          >
+            {{ item.title }}
+          </router-link>
           <div class="tip">
             <div class="tip_btn">
               <i class="iconfont icon-time"></i>{{ item.publishTime }}

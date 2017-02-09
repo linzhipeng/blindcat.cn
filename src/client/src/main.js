@@ -10,6 +10,7 @@ import Siderbar from './components/Siderbar.vue'
 import ArticleList from './components/ArticleList.vue'
 import TagsList from './components/TagsList.vue'
 import NewArticle from './components/NewArticle.vue'
+import ArticleDetail from './components/ArticleDetail.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueSimplemde from 'vue-simplemde' // markdown编辑器
@@ -76,6 +77,14 @@ var routes = [{
   components: {
     Topbar,
     Siderbar
+  }
+}, {
+  path: '/articleDetail/:id',
+  name: 'articleDetail',
+  components: {
+    Topbar,
+    Siderbar,
+    ArticleDetail
   }
 }]
 
