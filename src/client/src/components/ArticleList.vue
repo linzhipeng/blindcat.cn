@@ -1,38 +1,40 @@
 <!-- 文章列表 -->
 
 <template>
-  <div id="ArticleList">
-    <ul>
-      <li class="one_list" v-for="item in articleList">
-        <img class="list_img" src="../assets/blindcat.jpg" alt="">
-        <div class="list_text">
-          <router-link 
-            :to="'/articledetail/' + item._id" 
-            class="title"
-          >
-            {{ item.title }}
-          </router-link>
-          <div class="tip">
-            <div class="tip_btn">
-              <i class="iconfont icon-time"></i>{{ item.publishTime }}
+  <transition name="article-list">
+    <div id="ArticleList">
+      <ul>
+        <li class="one_list" v-for="item in articleList">
+          <img class="list_img" src="../assets/blindcat.jpg" alt="">
+          <div class="list_text">
+            <router-link 
+              :to="'/articledetail/' + item._id" 
+              class="title"
+            >
+              {{ item.title }}
+            </router-link>
+            <div class="tip">
+              <div class="tip_btn">
+                <i class="iconfont icon-time"></i>{{ item.publishTime }}
+              </div>
+              <div class="tip_btn">
+                <i class="iconfont icon-myshape"></i>瞎猫
+              </div>
+              <div class="tip_btn">
+                <i class="iconfont icon-information"></i>23
+              </div>
+              <div class="tip_btn">
+                <i class="iconfont icon-collect"></i>{{ item.aticleCollect }}
+              </div>
             </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-myshape"></i>瞎猫
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-information"></i>23
-            </div>
-            <div class="tip_btn">
-              <i class="iconfont icon-collect"></i>{{ item.aticleCollect }}
-            </div>
+            <p class="context">
+              {{ item.abstract }}
+            </p>
           </div>
-          <p class="context">
-            {{ item.abstract }}
-          </p>
-        </div>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
+    </div>
+  </transition>
 </template>
 
 <script type="text/javascript">
@@ -57,6 +59,13 @@
 
 <!-- 添加 "scoped" 属性使该css样式仅作用于该组件 -->
 <style scoped>
+  .article-list-enter-active {
+    transition: opacity 1s
+  }
+  .article-list-enter {
+    opacity: 0;
+  }
+
   #ArticleList {
     width: 100%;
   }

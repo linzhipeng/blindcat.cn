@@ -1,10 +1,12 @@
 <!-- 文章详情 -->
 
 <template>
-  <div>
-    <h1 class="article-title">{{articleNow.title}}</h1>
-    <div class="markdown-body" v-html="articleNow.content"></div>
-  </div>
+  <transition name="article-detail">
+    <div>
+      <h1 class="article-title">{{articleNow.title}}</h1>
+      <div class="markdown-body" v-html="articleNow.content"></div>
+    </div>
+  </transition>
 </template>
 
 <script type="text/javascript">
@@ -32,5 +34,14 @@
     display: block;
     padding: 15px 5px;
     border-bottom: 1px solid #ddd;
+  }
+
+  .article-detail-enter-active {
+    transition: all 1s;
+  }
+
+  .article-detail-enter {
+    opacity: 0;
+    margin-left: 50px;
   }
 </style>
