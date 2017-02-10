@@ -2,6 +2,7 @@
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
+const md = require('markdown-it')()
 const state = {
   // 文章列表
   articleList: '',
@@ -18,8 +19,14 @@ const mutations = {
   updateList (state, listData) {
     state.articleList = listData
   },
+  // 更新获取到的文章详情
   updateArticleDetail (state, articleData) {
+    articleData.content = md.render(articleData.content)
     state.articleNow = articleData
+  },
+  // 清除文章详情缓存
+  clearArticleDetail (state) {
+    state.articleNow = ''
   }
 }
 // actions
@@ -37,6 +44,7 @@ const actions = {
         console.log(error)
       })
   },
+  // 获取指定文章id的文章详情
   getArticleDetail (context, id) {
     axios
       .get(globalConfig.apiUrl + 'articledetail?id=' + id)

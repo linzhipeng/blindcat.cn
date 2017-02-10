@@ -16,6 +16,7 @@
     "axios": "^0.15.3",
     "element-ui": "^1.1.6",
     "github-markdown-css": "^2.4.1",
+    "markdown-it": "^8.2.2",
     "vue": "^2.1.10",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.1",
