@@ -9,7 +9,7 @@
         <router-view name="ArticleDetail"></router-view>
       </div>
     </div>
-    
+
     <!-- 左右2列布局 -->
     <div class="main2">
       <div class="left_box">

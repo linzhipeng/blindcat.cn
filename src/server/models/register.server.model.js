@@ -42,10 +42,10 @@ var userSchema = new mongoose.Schema({
 		type: String
 	},
 	account: {// 账号信息
-		email: {type: String, unique: true}, // email
-		qq: {type: Number, unique: true}, // QQ
-		wechat: {type: String, unique: true}, // 微信
-		phone: {type: Number, unique: true} // 手机
+		email: {type: String}, // email
+		qq: {type: Number}, // QQ
+		wechat: {type: String}, // 微信
+		phone: {type: Number} // 手机
 	},
 	registerTime: {// 注册时间
 		type: Date,

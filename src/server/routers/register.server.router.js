@@ -3,8 +3,12 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
+var userCheck = require('../common/userCheck.js')
+var userDbCheck = require('../common/userDbCheck.js')
 var mongoose = require('mongoose')
 var bcrypt = require("bcryptjs")
+var Promise = require('bluebird')
+mongoose.Promise = require('bluebird')
 
 var user = mongoose.model('user')
 
@@ -23,84 +27,61 @@ router
 		var password = req.body.password
 		var email = req.body.email
 		// 判断接收到的数据是否为空
- 		if (!username || username === '') {
- 			res.send({
- 				'state': false,
- 				'info': '用户名不能为空'
- 			})
- 			return false
- 		} else if (!password || password === '') {
- 			res.send({
- 				'state': false,
- 				'info': '密码不能为空'
- 			})
- 			return false
- 		} else if (!email || email === '') {
- 			res.send({
- 				'state': false,
- 				'info': '邮箱不能为空'
- 			})
- 			return false
- 		}
- 		// 判断数据库是否已经存在该昵称/邮箱
- 		user
- 			.findOne({'username': username})
- 			.exec(function (err, data) {
- 				if (err) {
- 					console.log(err)
- 				}
- 				if (data) {
- 					res.send({
- 						'state': false,
- 						'info': '用户名已存在！'
- 					})
- 					return false
- 				}
- 			})
- 		user
- 			.findOne({'account.email': email})
- 			.exec(function (err, data) {
- 				if (err) {
- 					console.log(err)
- 				}
- 				if (data) {
- 					res.send({
- 						'state': false,
- 						'info': '邮箱已存在！'
- 					})
- 					return false
- 				}
- 			})
- 		// 密码进行加密存储
- 		var salt = bcrypt.genSaltSync(10);
- 		password = bcrypt.hashSync(password, salt);
- 		// 存储用户数据
- 		var userData = new user({
- 			username: username,
- 			password: password,
- 			account: {
- 				email: email
- 			},
- 			token: '123',
- 			tokenExpire: 123
- 		})
- 		userData.save(function (err) {
- 			if (err) {
- 				if (err) {
- 					res.send({
- 						'state': false,
- 						'info': '失败！'
- 					})
- 					return false
- 				}
- 			} else {
- 				res.send({
- 					'state': true,
- 					'info': '成功！'
- 				})
- 				return true
- 			}
- 		})
+        Promise
+            .all([
+                userCheck.checkEmail(email),
+                userCheck.checkUsername(username),
+                userCheck.checkPassword(password)
+            ])
+            .then(() => {
+                return userDbCheck.checkDbUsername(username)
+            })
+            .then(data => {
+                if (data) {
+                    return Promise.reject("用户名已存在")
+                } else {
+                    return Promise.resolve()
+                }
+            })
+            .then(() => {
+                return userDbCheck.checkDbEmail(email)
+            })
+            .then(data => {
+                if (data) {
+                    return Promise.reject("邮箱已存在")
+                } else {
+                    return Promise.resolve()
+                }
+            })
+            .then(data => {
+                // 密码进行加密存储
+                var salt = bcrypt.genSaltSync(10);
+                password = bcrypt.hashSync(password, salt);
+
+                // 存储用户数据
+                var userData = new user({
+                    username: username,
+                    password: password,
+                    account: {
+                        email: email
+                    },
+                    token: '123',
+                    tokenExpire: 123
+                })
+                return userData.save()
+            })
+            .then(() => {
+                res.send({
+                    'state': true,
+                    'info': '注册成功！'
+                })
+            })
+            .catch((e) => {
+                res.send({
+                    'state': false,
+                    'info': e
+                })
+            })
  	}
  })
 module.exports = router
