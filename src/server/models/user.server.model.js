@@ -28,11 +28,9 @@ var userSchema = new mongoose.Schema({
 	},
 	token: {// 用户token
 		type: String,
-		required: true
 	},
 	tokenExpire: {// token到期时间戳
 		type: Number,
-		required: true
 	},
 	authority: {// 用户身份（1：普通用户，2：管理员）
 		type: Number,

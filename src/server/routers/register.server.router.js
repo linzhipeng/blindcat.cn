@@ -4,7 +4,6 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var userCheck = require('../common/userCheck.js')
-var userDbCheck = require('../common/userDbCheck.js')
 var mongoose = require('mongoose')
 var bcrypt = require("bcryptjs")
 var Promise = require('bluebird')
@@ -28,13 +27,15 @@ router
 		var email = req.body.email
 		// 判断接收到的数据是否为空
         Promise
+            // 检查用户数据合法性
             .all([
                 userCheck.checkEmail(email),
                 userCheck.checkUsername(username),
                 userCheck.checkPassword(password)
             ])
+            // 检查用户数据在数据库中是否已存在
             .then(() => {
-                return userDbCheck.checkDbUsername(username)
+                return userCheck.checkDbUsername(username)
             })
             .then(data => {
                 if (data) {
@@ -44,7 +45,7 @@ router
                 }
             })
             .then(() => {
-                return userDbCheck.checkDbEmail(email)
+                return userCheck.checkDbEmail(email)
             })
             .then(data => {
                 if (data) {
@@ -53,12 +54,12 @@ router
                     return Promise.resolve()
                 }
             })
+            // 存储用户数据
             .then(data => {
                 // 密码进行加密存储
                 var salt = bcrypt.genSaltSync(10);
                 password = bcrypt.hashSync(password, salt);
 
-                // 存储用户数据
                 var userData = new user({
                     username: username,
                     password: password,
@@ -76,6 +77,7 @@ router
                     'info': '注册成功！'
                 })
             })
+            // 捕捉返回错误信息
             .catch((e) => {
                 res.send({
                     'state': false,
