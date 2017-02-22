@@ -69,6 +69,9 @@
   #ArticleList {
     width: 100%;
   }
+  #ArticleList ul {
+    -webkit-padding-start: 0;
+  }
 
   .one_list {
     padding: 2rem 1rem;

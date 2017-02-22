@@ -4,9 +4,10 @@ import globalConfig from '../../config/config.js'
 import axios from 'axios'
 import { Notification } from 'element-ui'
 const state = {
-  registerForm: {
+  userForm: {
     username: '',
-    email: ''
+    email: '',
+    password: ''
   },
   rules: {
     username: [
@@ -21,25 +22,27 @@ const state = {
       { required: true, message: '请输入密码', trigger: 'blur' },
       { min: 6, message: '密码长度至少是6位哦~', trigger: 'blur, change' }
     ]
-  }
+  },
+  activeName: 'register'
 }
 
 const getters = {
-  registerForm: state => state.registerForm,
-  rules: state => state.rules
+  userForm: state => state.userForm,
+  rules: state => state.rules,
+  activeName: state => state.activeName
 }
 
 const mutations = {
-  recordRegisterData: (state, data) => {
+  recordUserData: (state, data) => {
     switch (data.name) {
       case 'username':
-        state.registerForm.username = data.value
+        state.userForm.username = data.value
         break
       case 'email':
-        state.registerForm.email = data.value
+        state.userForm.email = data.value
         break
       case 'password':
-        state.registerForm.password = data.value
+        state.userForm.password = data.value
         break
       default:
         break
@@ -50,9 +53,9 @@ const mutations = {
 const actions = {
   submitRegisterData: (context) => {
     axios.post(globalConfig.apiUrl + 'register', {
-      username: context.getters.registerForm.username,
-      email: context.getters.registerForm.email,
-      password: context.getters.registerForm.password
+      username: context.getters.userForm.username,
+      email: context.getters.userForm.email,
+      password: context.getters.userForm.password
     })
     .then(function (res) {
       context.commit('notLoading')
@@ -74,6 +77,13 @@ const actions = {
     })
     .catch(function (error) {
       console.log(error)
+    })
+  },
+  submitLoginData: (context) => {
+    Notification({
+      title: '成功',
+      message: '登录成功！',
+      type: 'success'
     })
   }
 }
