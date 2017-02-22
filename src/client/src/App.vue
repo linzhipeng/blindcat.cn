@@ -5,6 +5,7 @@
     <!-- 1列布局居中容器 -->
     <div class="main1">
       <div class="container">
+        <router-view name="Register"></router-view>
         <router-view name="NewArticle"></router-view>
         <router-view name="ArticleDetail"></router-view>
       </div>
