@@ -11,6 +11,7 @@ var Promise = require('bluebird')
 mongoose.Promise = require('bluebird')
 
 var user = mongoose.model('user')
+var checkEmail = mongoose.model('checkEmail')
 
 // 实例化模块
 var app = express()
@@ -26,13 +27,15 @@ router
 	 	var username = req.body.username
 		var password = req.body.password
 		var email = req.body.email
+        var verifyCode = req.body.verifyCode
 		// 判断接收到的数据是否为空
         Promise
             // 检查用户数据合法性
             .all([
                 userCheck.checkEmail(email),
                 userCheck.checkUsername(username),
-                userCheck.checkPassword(password)
+                userCheck.checkPassword(password),
+                userCheck.checkVerifyCode(verifyCode)
             ])
             // 检查用户数据在数据库中是否已存在
             .then(() => {
@@ -55,8 +58,22 @@ router
                     return Promise.resolve()
                 }
             })
-            // 存储用户数据
+            .then(() => {
+                return checkEmail.findOne({'email': email}).exec()
+            })
             .then(data => {
+                if (data) {
+                    if (data.verifyCode == verifyCode) {
+                        return Promise.resolve()
+                    } else {
+                        return Promise.reject("验证码不正确")
+                    }
+                } else {
+                    return Promise.reject("请先点击获取邮箱验证码")
+                }
+            })
+            // 存储用户数据
+            .then(() => {
                 // 密码进行加密存储
                 var salt = bcrypt.genSaltSync(10);
                 password = bcrypt.hashSync(password, salt);
