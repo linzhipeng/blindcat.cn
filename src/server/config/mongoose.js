@@ -16,5 +16,6 @@ module.exports = function(){
 	// 使用数据模板
 	require('../models/article.server.model.js')
 	require('../models/user.server.model.js')
+	require('../models/checkEmail.server.model.js')
 	return db
 }

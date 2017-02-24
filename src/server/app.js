@@ -26,6 +26,7 @@ var article = require('./routers/article.server.router')
 var newArticle = require('./routers/newArticle.server.router')
 var articleDetail = require('./routers/articleDetail.server.router')
 var register = require('./routers/register.server.router')
+var sendEmail = require('./routers/sendEmail.server.router')
 
 // 设置使用handels模板引擎
 app.set('views', path.join(__dirname, 'views'));
@@ -44,6 +45,7 @@ app.use('/article', article)
 app.use('/newarticle', newArticle)
 app.use('/articledetail', articleDetail)
 app.use('/register', register)
+app.use('/sendemail', sendEmail)
 
 // 监听端口
 app.listen(config.port, function () {

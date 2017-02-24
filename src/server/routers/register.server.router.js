@@ -4,6 +4,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var userCheck = require('../common/userCheck.js')
+var giveToken = require('../common/giveToken.js')
 var mongoose = require('mongoose')
 var bcrypt = require("bcryptjs")
 var Promise = require('bluebird')
@@ -18,7 +19,7 @@ var router = express.Router()
 // bodyParser设置解析http请求体
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-var data
+
 router
  .post('/', function(req, res, next) {
  	if (req.body) {
@@ -72,13 +73,20 @@ router
                 return userData.save()
             })
             .then(() => {
+                giveToken.start(username)
+            })
+            .then(token => {
+                console.log(token)
+            })
+            .then(() => {
                 res.send({
                     'state': true,
                     'info': '注册成功！'
                 })
             })
             // 捕捉返回错误信息
-            .catch((e) => {
+            .catch(e => {
+                console.log(e)
                 res.send({
                     'state': false,
                     'info': e
