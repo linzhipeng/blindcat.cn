@@ -3,7 +3,7 @@
 <template>
   <el-tabs v-model="activeName">
     <el-tab-pane label="注册" name="register" class="form_box">
-      <el-form :model="userForm" :rules="rules" ref="registerFormRef" label-width="60px">
+      <el-form :model="userForm" :rules="rules" ref="registerFormRef" label-width="68px">
         <el-form-item label="昵称" prop="username">
           <el-input
             :value="userForm.username"
@@ -18,6 +18,17 @@
           ></el-input>
         </el-form-item>
 
+        <el-form-item label="验证码" prop="verifyCode">
+          <el-input
+            placeholder="请输入内容"
+            style="max-width: 300px;"
+            :value="userForm.verifyCode"
+            @change="recordUserData('verifyCode', $event)"
+          >
+            <el-button slot="append" @click="sendEmailVerifyCode">获取验证码</el-button>
+          </el-input>
+        </el-form-item>
+
         <el-form-item label="密码" prop="password">
           <el-input
             type="password"
@@ -29,11 +40,12 @@
 
         <el-form-item>
           <el-button type="primary" @click="submitForm('registerFormRef', 'register')">注册</el-button>
+        </el-form-item>
       </el-form>
     </el-tab-pane>
 
     <el-tab-pane label="登录" name="login" class="form_box">
-      <el-form :model="userForm" :rules="rules" ref="loginFormRef" label-width="60px">
+      <el-form :model="userForm" :rules="rules" ref="loginFormRef" label-width="68px">
         <el-form-item label="邮箱" prop="email">
           <el-input
             :value="userForm.email"
@@ -52,6 +64,7 @@
 
         <el-form-item>
           <el-button type="primary" @click="submitForm('loginFormRef', 'login')">登录</el-button>
+        </el-form-item>
       </el-form>
     </el-tab-pane>
   </el-tabs>
@@ -71,7 +84,8 @@
     },
     methods: {
       ...mapActions([
-        'submitRegister'
+        'submitRegister',
+        'sendEmailVerifyCode'
       ]),
       submitForm (formName, submitType) {
         this.$refs[formName].validate((valid) => {
