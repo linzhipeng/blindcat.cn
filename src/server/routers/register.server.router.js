@@ -83,17 +83,9 @@ router
                     password: password,
                     account: {
                         email: email
-                    },
-                    token: '123',
-                    tokenExpire: 123
+                    }
                 })
                 return userData.save()
-            })
-            .then(() => {
-                giveToken.start(username)
-            })
-            .then(token => {
-                console.log(token)
             })
             .then(() => {
                 res.send({

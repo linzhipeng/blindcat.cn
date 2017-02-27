@@ -11,4 +11,6 @@ module.exports = {
 		cookie: {maxAge: 60 * 1000 * 30}
 	},
 	hashKey: 'blindcat',
+	// token有效期
+	tokenExpireDays: 30
 }

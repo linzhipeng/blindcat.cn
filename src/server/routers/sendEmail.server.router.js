@@ -53,7 +53,7 @@ router
                                     codeExpire: parseInt(nowTime + (30 * 60 * 1000), 10),
                                     lastTime: nowTime,
                                     useTimes: data.useTimes + 1,
-                                }})
+                                }}, {new: true})
                             }
                         } else {// 上一次验证不是今天
                             return checkEmail.findByIdAndUpdate(data._id, { $set: {
@@ -61,7 +61,7 @@ router
                                 codeExpire: parseInt(nowTime + (30 * 60 * 1000), 10),
                                 lastTime: nowTime,
                                 useTimes: 1,
-                            }})
+                            }}, {new: true})
                         }
                     } else {// 不存在该邮箱的验证缓存则新增加缓存
                         var newCheckEmailData = new checkEmail({
