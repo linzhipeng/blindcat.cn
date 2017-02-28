@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var userCheck = require('../common/userCheck.js')
 var giveToken = require('../common/giveToken.js')
+var verifyCodeEmailClass = require('../common/verifyCodeEmailClass.js')
 var mongoose = require('mongoose')
 var bcrypt = require("bcryptjs")
 var Promise = require('bluebird')
@@ -27,7 +28,7 @@ router
 	 	var username = req.body.username
 		var password = req.body.password
 		var email = req.body.email
-        var verifyCode = req.body.verifyCode
+        var verifyCode = parseInt(req.body.verifyCode, 10)
 		// 判断接收到的数据是否为空
         Promise
             // 检查用户数据合法性
@@ -62,10 +63,12 @@ router
                 return checkEmail.findOne({'email': email}).exec()
             })
             .then(data => {
-                if (data) {
-                    if (data.verifyCode == verifyCode) {
+                if (data) {// 检查到邮件验证码缓存表中存在该验证码
+                    if (data.verifyCode === verifyCode && data.codeType === 'register') {// 验证码正确且类型相符
                         return Promise.resolve()
-                    } else {
+                    } else if (data.codeType !== 'register') {// 验证码类型不符
+                        return Promise.reject("请先点击获取邮箱验证码")
+                    } else {// 验证码不正确
                         return Promise.reject("验证码不正确")
                     }
                 } else {
@@ -88,6 +91,8 @@ router
                 return userData.save()
             })
             .then(() => {
+                var loginVerifyCodeClear = new verifyCodeEmailClass(email)
+                loginVerifyCodeClear.clearCode()
                 res.send({
                     'state': true,
                     'info': '注册成功！'

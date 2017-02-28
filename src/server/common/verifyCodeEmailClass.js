@@ -11,29 +11,27 @@ var nodemailer = require('nodemailer')
 var checkEmail = mongoose.model('checkEmail')
 var user = mongoose.model('user')
 
-var sendVerifyCodeEmail = (function(){
-    function nice () {
-        console.log('123')
-    }
-    function _sendVerifyCodeEmail (email, codeType) {
+var verifyCodeEmailClass = (function(){
+    function _verifyCodeEmailClass (email, codeType) {
         // codeType：验证码用途类型【注册、修改密码、修改邮箱】
         // 安全模式
-        if (!(this instanceof sendVerifyCodeEmail)) {
-            return new sendVerifyCodeEmail(name)
+        if (!(this instanceof verifyCodeEmailClass)) {
+            return new verifyCodeEmailClass(name)
         }
-        this.email = email
-        this.codeType = codeType
+        this.email = email || ''
+        this.codeType = codeType || ''
         this.verifyCode = parseInt(Math.random()*900000 + 100000, 10)
     }
 
-    _sendVerifyCodeEmail.prototype = {
+    _verifyCodeEmailClass.prototype = {
+        // 向指定用户发送指定类型的邮箱验证码
         sendCode: function () {
             return Promise
                 .resolve(() => {// 验证当前邮箱格式是否正确
                     userCheck.checkEmail(this.email)
                 })
                 .then(() => {// 根据codeType选择是否需要判断该邮箱是否已注册
-                    userCheck.checkDbEmail(this.email)
+                    return userCheck.checkDbEmail(this.email)
                 })
                 .then(data => {
                     if (data && this.codeType === 'register') {// 该用户已注册且codeType为register
@@ -116,10 +114,22 @@ var sendVerifyCodeEmail = (function(){
                         'info': e
                     })
                 })
+        },
+
+        // 清除指定用户的邮箱验证码缓存表
+        clearCode: function () {
+            checkEmail
+                .remove({email: this.email})
+                .then(data => {
+                    return true
+                })
+                .catch(e => {
+                    console.log(e)
+                })
         }
     }
 
-    return _sendVerifyCodeEmail
+    return _verifyCodeEmailClass
 })()
 
-module.exports = sendVerifyCodeEmail
+module.exports = verifyCodeEmailClass

@@ -4,7 +4,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var userCheck = require('../common/userCheck.js')
-var emailVerifyCode = require('../common/emailVerifyCode.js')
+var verifyCodeEmailClass = require('../common/verifyCodeEmailClass.js')
 var Promise = require('bluebird')
 var mongoose = require('mongoose')
 var bcrypt = require("bcryptjs")
@@ -25,7 +25,7 @@ router
     .post('/', function(req, res, next) {
         if (req.body) {
             var email = req.body.email
-            var registerVerifyCodeSend = new emailVerifyCode(email, 'register')
+            var registerVerifyCodeSend = new verifyCodeEmailClass(email, 'register')
             registerVerifyCodeSend.sendCode()
                 .then(data => {
                     res.send(data)

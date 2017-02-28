@@ -29,7 +29,7 @@ module.exports = {
     checkVerifyCode: (verifyCode) => {
         if (!verifyCode || verifyCode === '') {
             return Promise.reject('请输入验证码')
-        } else if (verifyCode.length !== 6){
+        } else if (verifyCode.toString().length !== 6){
             return Promise.reject('请输入正确的6位验证码')
         } else {
             return Promise.resolve()
