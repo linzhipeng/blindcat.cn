@@ -21,8 +21,8 @@ module.exports = {
 			subject: '【瞎猫网】使用邮件验证码验证您的身份'
 		},
 		// 邮件验证码请求频率限制（分钟）
-		waitingTime: 0,
+		waitingTime: 1,
 		// 邮件验证码每天使用次数限制（次）
-		useTimes: 5
+		useTimes: 20
 	}
 }
