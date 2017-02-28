@@ -30,6 +30,11 @@ var checkEmailSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 		default: 1
+	},
+	codeType: {// codeType：验证码用途类型【注册、修改密码、修改邮箱】
+		type: String,
+		required: true,
+		default: '注册'
 	}
 })
 

@@ -5,7 +5,6 @@ var config = require('../config/config.js')
 var Promise = require('bluebird')
 var mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var user = mongoose.model('user')
 var bcrypt = require("bcryptjs")
 var user = mongoose.model('user')
 
