@@ -9,7 +9,7 @@ var bcrypt = require("bcryptjs")
 var user = mongoose.model('user')
 
 var userTokenClass = (function () {
-	function _userTokenClass (userId) {
+	function _userTokenClass (userId, token) {
 		// 用户id
 		// 安全模式
 		if (!(this instanceof userTokenClass)) {
@@ -17,6 +17,7 @@ var userTokenClass = (function () {
 		}
 
 		this.userId = userId || ''
+		this.token = token || ''
 	}
 
 	_userTokenClass.prototype = {
@@ -60,7 +61,7 @@ var userTokenClass = (function () {
 		},
 
 		// 检查并返回当前用户token凭证
-		showToken: function () {
+		checkToken: function () {
 			return user
 				.findOne({'_id': this.userId})
 				.exec()
@@ -69,17 +70,31 @@ var userTokenClass = (function () {
 						if (data.tokenExpire && data.token) {// 存在token过期时间
 							var nowTimeToken = new Date().getTime()
 							if (data.tokenExpire > nowTimeToken) {// token未过期，返回当前token
-								return Promise.resolve(data.token)
+								if (data.token === this.token) {// token验证通过
+									return Promise.resolve()
+								} else {// token验证失败
+									this.clearToken()
+									return Promise.reject('验证出错！请重新登录尝试！')
+								}
 							} else {// token已过期
+								this.clearToken()
 								return Promise.reject('登录已过期，请重新登录！')
 							}
-						} else {// 不存在token过期时间
+						} else {// 不存在token
 							return Promise.reject('请先进行登录')
 						}
-					} else {
+					} else {// 不存在该用户
 						return Promise.reject('请先进行注册')
 					}
 				})
+		},
+
+		// 清除用户token数据
+		clearToken: function () {
+			user.findByIdAndUpdate(this.userId, { $set: {
+				'token': '',
+				'tokenExpire': ''
+			}}, {new: true})
 		}
 	}
 
