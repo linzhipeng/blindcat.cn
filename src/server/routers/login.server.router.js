@@ -3,7 +3,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var userCheck = require('../common/userCheck.js')
-var giveToken = require('../common/giveToken.js')
+var userTokenClass = require('../common/userTokenClass.js')
 var bcrypt = require("bcryptjs")
 var Promise = require('bluebird')
 
@@ -45,22 +45,23 @@ router
             })
             // 根据userId 生成并存储用户token
             .then(userId => {
-                return giveToken.start(userId)
+                var loginToken = new userTokenClass(userId)
+                return loginToken.createToken()
             })
             // 返回登录成功后所需信息
             .then(userTokendata => {
-                if (token) {
+                if (userTokendata) {
                     res.send({
                         'state': true,
+                        'info': '登录成功！',
                         'data': userTokendata
                     })
                 } else {
-                    return Promise.reject('生成token失败！')
+                    return Promise.reject('登录失败')
                 }
             })
             // 捕捉返回错误信息
             .catch(e => {
-                console.log(e)
                 res.send({
                     'state': false,
                     'info': e
