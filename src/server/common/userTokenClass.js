@@ -20,6 +20,7 @@ var userTokenClass = (function () {
 	}
 
 	_userTokenClass.prototype = {
+		// 生成用户token凭证
 		createToken: function () {
 			return user
 				.findOne({'_id': this.userId})
@@ -55,6 +56,29 @@ var userTokenClass = (function () {
 				})
 				.catch(e => {
 					return Promise.reject(e)
+				})
+		},
+
+		// 检查并返回当前用户token凭证
+		showToken: function () {
+			return user
+				.findOne({'_id': this.userId})
+				.exec()
+				.then(data => {
+					if (data) {
+						if (data.tokenExpire && data.token) {// 存在token过期时间
+							var nowTimeToken = new Date().getTime()
+							if (data.tokenExpire > nowTimeToken) {// token未过期，返回当前token
+								return Promise.resolve(data.token)
+							} else {// token已过期
+								return Promise.reject('登录已过期，请重新登录！')
+							}
+						} else {// 不存在token过期时间
+							return Promise.reject('请先进行登录')
+						}
+					} else {
+						return Promise.reject('请先进行注册')
+					}
 				})
 		}
 	}
