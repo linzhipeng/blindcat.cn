@@ -28,6 +28,7 @@ const state = {
       { min: 6, max: 6, message: '验证码长度是6位哦~', trigger: 'blur, change' }
     ]
   },
+  // 当前选项卡的name
   activeName: 'register'
 }
 
@@ -39,6 +40,7 @@ const getters = {
 }
 
 const mutations = {
+  // 记录用户输入数据
   recordUserData: (state, data) => {
     switch (data.name) {
       case 'username':
@@ -56,6 +58,13 @@ const mutations = {
       default:
         break
     }
+  },
+  // 清除注册时的数据并跳转到登录表单
+  toLogin: (state) => {
+    state.userForm.username = ''
+    state.userForm.password = ''
+    state.userForm.verifyCode = ''
+    state.activeName = 'login'
   }
 }
 
@@ -71,9 +80,10 @@ const actions = {
     .then(function (res) {
       if (res && res.data) {
         if (res.data.state) {
+          context.commit('toLogin')
           Notification({
             title: '成功',
-            message: '注册成功！',
+            message: '注册成功！请输入密码进行登录！',
             type: 'success'
           })
         } else {

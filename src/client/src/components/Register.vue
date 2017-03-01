@@ -1,7 +1,7 @@
 <!-- 用户注册 -->
 
 <template>
-  <el-tabs v-model="activeName">
+  <el-tabs :active-name="activeName">
     <el-tab-pane label="注册" name="register" class="form_box">
       <el-form :model="userForm" :rules="rules" ref="registerFormRef" label-width="68px">
         <el-form-item label="昵称" prop="username">
