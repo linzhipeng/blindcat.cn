@@ -51,7 +51,18 @@ var userTokenClass = (function () {
 					if (data) {
 						return Promise.resolve({
 							'token': data.token,
-							'tokenExpire': data.tokenExpire
+							'tokenExpire': data.tokenExpire,
+							'username': data.username,
+							'userId': data._id,
+							'account': {
+								'email': data.account.email,
+								'qq': data.account. qq || '',
+								'wechat': data.account.wechat || '',
+								'phone': data.account.phone || '',
+							},
+							'avatar': data.avatar || '',
+							'userIntro': data.userIntro || '',
+							'birthday': data.birthday || '',
 						})
 					}
 				})
@@ -60,7 +71,7 @@ var userTokenClass = (function () {
 				})
 		},
 
-		// 检查并返回当前用户token凭证
+		// 检查并返回当前用户token凭证及用户基本信息
 		checkToken: function () {
 			return user
 				.findOne({'_id': this.userId})
