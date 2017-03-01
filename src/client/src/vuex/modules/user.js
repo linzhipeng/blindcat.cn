@@ -132,8 +132,7 @@ const actions = {
       if (res && res.data) {
         if (res.data.state) {
           // 保存用户信息
-          window.localStorage.token = res.data.data.token
-          window.localStorage.tokenExpire = res.data.data.tokenExpire
+          window.localStorage.userData = JSON.stringify(res.data.data)
           Notification({
             title: '成功',
             message: '登录成功！',
