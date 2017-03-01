@@ -84,9 +84,22 @@
     },
     methods: {
       ...mapActions([
-        'submitRegister',
-        'sendEmailVerifyCode'
+        'submitRegister'
       ]),
+      sendEmailVerifyCode () {
+        this.$refs['registerFormRef'].validateField('email', valid => {
+          if (valid) {
+            Notification({
+              title: '出错了',
+              message: valid,
+              type: 'error'
+            })
+          } else {
+            this.$store.dispatch('sendEmailVerifyCode')
+          }
+        })
+      },
+      // 提交表单
       submitForm (formName, submitType) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -105,6 +118,7 @@
           }
         })
       },
+      // 根据输入数据的类型存储用户输入信息
       recordUserData (name, value) {
         this.$store.commit('recordUserData', {
           name: name,
