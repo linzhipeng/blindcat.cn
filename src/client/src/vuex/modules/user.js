@@ -60,6 +60,7 @@ const mutations = {
 }
 
 const actions = {
+  // 提交注册数据
   submitRegisterData: (context) => {
     axios.post(globalConfig.apiUrl + 'register', {
       username: context.getters.userForm.username,
@@ -68,7 +69,6 @@ const actions = {
       verifyCode: context.getters.userForm.verifyCode
     })
     .then(function (res) {
-      context.commit('notLoading')
       if (res && res.data) {
         if (res.data.state) {
           Notification({
@@ -93,12 +93,12 @@ const actions = {
       })
     })
   },
+  // 向用户邮箱发送邮件验证码
   sendEmailVerifyCode: (context) => {
     axios.post(globalConfig.apiUrl + 'sendemail', {
       email: context.getters.userForm.email
     })
     .then(function (res) {
-      context.commit('notLoading')
       if (res && res.data) {
         if (res.data.state) {
           Notification({
@@ -124,10 +124,36 @@ const actions = {
     })
   },
   submitLoginData: (context) => {
-    Notification({
-      title: '成功',
-      message: '登录成功！',
-      type: 'success'
+    axios.post(globalConfig.apiUrl + 'login', {
+      email: context.getters.userForm.email,
+      password: context.getters.userForm.password
+    })
+    .then(function (res) {
+      if (res && res.data) {
+        if (res.data.state) {
+          // 保存用户信息
+          window.localStorage.token = res.data.data.token
+          window.localStorage.tokenExpire = res.data.data.tokenExpire
+          Notification({
+            title: '成功',
+            message: '登录成功！',
+            type: 'success'
+          })
+        } else {
+          Notification({
+            title: '出错了',
+            message: res.data.info,
+            type: 'error'
+          })
+        }
+      }
+    })
+    .catch(function (error) {
+      Notification({
+        title: '服务器错误',
+        message: error,
+        type: 'error'
+      })
     })
   }
 }
