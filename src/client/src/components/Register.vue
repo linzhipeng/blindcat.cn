@@ -86,7 +86,9 @@
       ...mapActions([
         'submitRegister'
       ]),
+      // 发送邮件验证码
       sendEmailVerifyCode () {
+        // 检查邮箱合法性
         this.$refs['registerFormRef'].validateField('email', valid => {
           if (valid) {
             Notification({
@@ -95,18 +97,99 @@
               type: 'error'
             })
           } else {
+            // 提交邮箱获取验证码
             this.$store.dispatch('sendEmailVerifyCode')
+              .then(res => {
+                if (res && res.data) {
+                  if (res.data.state) {
+                    Notification({
+                      title: '成功',
+                      message: '已经向您的邮箱发送验证码，请注意查收。（若没收到，请留意邮箱的垃圾箱）',
+                      type: 'success'
+                    })
+                  } else {
+                    Notification({
+                      title: '出错了',
+                      message: res.data.info,
+                      type: 'error'
+                    })
+                  }
+                }
+              })
+              .catch(e => {
+                Notification({
+                  title: '服务器错误',
+                  message: e,
+                  type: 'error'
+                })
+              })
           }
         })
       },
-      // 提交表单
+      // 提交注册/登录表单
       submitForm (formName, submitType) {
+        // 检查表单合法性
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // 提交注册表单
             if (submitType === 'register') {
               this.$store.dispatch('submitRegisterData')
+                .then(res => {
+                  if (res && res.data) {
+                    if (res.data.state) {
+                      Notification({
+                        title: '成功',
+                        message: '注册成功！请输入密码进行登录！',
+                        type: 'success'
+                      })
+                      this.$store.commit('toLogin')
+                    } else {
+                      Notification({
+                        title: '出错了',
+                        message: res.data.info,
+                        type: 'error'
+                      })
+                    }
+                  }
+                })
+                .catch(e => {
+                  Notification({
+                    title: '服务器错误',
+                    message: e,
+                    type: 'error'
+                  })
+                })
             } else {
+              // 提交登录表单
               this.$store.dispatch('submitLoginData')
+                .then(res => {
+                  if (res && res.data) {
+                    if (res.data.state) {
+                      // 缓存用户信息
+                      window.localStorage.userData = JSON.stringify(res.data.data)
+                      // 跳转到首页
+                      this.$router.push('/')
+                      Notification({
+                        title: '成功',
+                        message: '登录成功！',
+                        type: 'success'
+                      })
+                    } else {
+                      Notification({
+                        title: '出错了',
+                        message: res.data.info,
+                        type: 'error'
+                      })
+                    }
+                  }
+                })
+                .catch(e => {
+                  Notification({
+                    title: '服务器错误',
+                    message: e,
+                    type: 'error'
+                  })
+                })
             }
           } else {
             Notification({

@@ -2,7 +2,6 @@
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
-import { Notification } from 'element-ui'
 const state = {
   userForm: {
     username: '',
@@ -71,98 +70,23 @@ const mutations = {
 const actions = {
   // 提交注册数据
   submitRegisterData: (context) => {
-    axios.post(globalConfig.apiUrl + 'register', {
+    return axios.post(globalConfig.apiUrl + 'register', {
       username: context.getters.userForm.username,
       email: context.getters.userForm.email,
       password: context.getters.userForm.password,
       verifyCode: context.getters.userForm.verifyCode
     })
-    .then(function (res) {
-      if (res && res.data) {
-        if (res.data.state) {
-          context.commit('toLogin')
-          Notification({
-            title: '成功',
-            message: '注册成功！请输入密码进行登录！',
-            type: 'success'
-          })
-        } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
-          })
-        }
-      }
-    })
-    .catch(function (error) {
-      Notification({
-        title: '服务器错误',
-        message: error,
-        type: 'error'
-      })
-    })
   },
   // 向用户邮箱发送邮件验证码
   sendEmailVerifyCode: (context) => {
-    axios.post(globalConfig.apiUrl + 'sendemail', {
+    return axios.post(globalConfig.apiUrl + 'sendemail', {
       email: context.getters.userForm.email
-    })
-    .then(function (res) {
-      if (res && res.data) {
-        if (res.data.state) {
-          Notification({
-            title: '成功',
-            message: '已经向您的邮箱发送验证码，请注意查收。（若没收到，请留意邮箱的垃圾箱）',
-            type: 'success'
-          })
-        } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
-          })
-        }
-      }
-    })
-    .catch(function (error) {
-      Notification({
-        title: '服务器错误',
-        message: error,
-        type: 'error'
-      })
     })
   },
   submitLoginData: (context) => {
-    axios.post(globalConfig.apiUrl + 'login', {
+    return axios.post(globalConfig.apiUrl + 'login', {
       email: context.getters.userForm.email,
       password: context.getters.userForm.password
-    })
-    .then(function (res) {
-      if (res && res.data) {
-        if (res.data.state) {
-          // 保存用户信息
-          window.localStorage.userData = JSON.stringify(res.data.data)
-          Notification({
-            title: '成功',
-            message: '登录成功！',
-            type: 'success'
-          })
-        } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
-          })
-        }
-      }
-    })
-    .catch(function (error) {
-      Notification({
-        title: '服务器错误',
-        message: error,
-        type: 'error'
-      })
     })
   }
 }
