@@ -168,7 +168,7 @@
                       // 缓存用户信息
                       window.localStorage.userInfo = JSON.stringify(res.data.data)
                       // 读取缓存数据
-                      this.$store.commit('updateUserInfo')
+                      this.$store.dispatch('updateUserInfo')
                       // 跳转到首页
                       this.$router.push('/')
                       Notification({

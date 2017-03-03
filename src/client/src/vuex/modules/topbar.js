@@ -2,35 +2,43 @@
 
 const state = {
   // 导航条菜单数据
-  topbarData: [{
-    name: '首页',
-    url: '',
-    routerName: 'home'
-  }, {
-    name: '分类',
-    url: 'tags',
-    routerName: 'tags'
-  }, {
-    name: '投稿',
-    url: 'newarticle',
-    routerName: 'newarticle'
-  }, {
-    name: '资源',
-    url: 'resources',
-    routerName: 'resources'
-  }, {
-    name: '搜索',
-    url: 'search',
-    routerName: 'search'
-  }, {
-    name: '关于',
-    url: 'about',
-    routerName: 'about'
-  }, {
-    name: '用户',
-    url: 'user',
-    routerName: 'user'
-  }],
+  topbarData: {
+    home: {
+      name: '首页',
+      url: '',
+      routerName: 'home'
+    },
+    tags: {
+      name: '分类',
+      url: 'tags',
+      routerName: 'tags'
+    },
+    newarticle: {
+      name: '投稿',
+      url: 'newarticle',
+      routerName: 'newarticle'
+    },
+    resources: {
+      name: '资源',
+      url: 'resources',
+      routerName: 'resources'
+    },
+    search: {
+      name: '搜索',
+      url: 'search',
+      routerName: 'search'
+    },
+    about: {
+      name: '关于',
+      url: 'about',
+      routerName: 'about'
+    },
+    user: {
+      name: '用户',
+      url: 'user',
+      routerName: 'user'
+    }
+  },
   // 当前屏幕宽度
   screenWidth: '',
   // 当前使用的导航条类型【Topbar/TopbarMobile】
@@ -66,6 +74,14 @@ const mutations = {
   siderbarClose (state) {
     // 关闭siderbar
     state.siderbarShow = false
+  },
+  showUsername: (state, username) => {
+    // 如果找得到用户缓存且缓存不为空
+    if (username && username !== '') {
+      state.topbarData.user.name = username
+    } else {
+      state.topbarData.user.name = '用户'
+    }
   }
 }
 

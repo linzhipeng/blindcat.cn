@@ -73,14 +73,22 @@ const mutations = {
     state.userForm.verifyCode = ''
     state.activeName = 'login'
   },
+  // 退出登录，清除用户登录数据
+  logout: (state) => {
+    window.localStorage.userInfo = ''
+    state.userInfo = ''
+    state.activeName = 'login'// 退出登录后用户界面切换到登录表单
+    state.hasLogin = false
+  },
   // 从localStorage中获取更新用户数据
-  updateUserInfo: (state) => {
-    let userInfo = JSON.parse(window.localStorage.userInfo)
+  updateUserInfo: (state, userInfo) => {
     // 如果找得到用户缓存且缓存不为空
     if (userInfo && userInfo !== '') {
+      state.userForm.password = ''// 登录成功后清除密码记录
       state.userInfo = userInfo
       state.hasLogin = true
     } else {
+      state.activeName = 'login'// 退出登录后用户界面切换到登录表单
       state.hasLogin = false
     }
   }
@@ -102,11 +110,25 @@ const actions = {
       email: context.getters.userForm.email
     })
   },
+  // 提交登录数据
   submitLoginData: (context) => {
+    console.log(context.state.topbarData)
     return axios.post(globalConfig.apiUrl + 'login', {
       email: context.getters.userForm.email,
       password: context.getters.userForm.password
     })
+  },
+  // 从localStorage中获取更新用户数据
+  updateUserInfo: (context) => {
+    let userInfo = JSON.parse(window.localStorage.userInfo)
+    context.commit('updateUserInfo', userInfo)
+    context.commit('showUsername', userInfo.username)
+  },
+  logout: (context) => {
+    // 清除用户登录数据
+    context.commit('logout')
+    // 更新导航条用户名
+    context.commit('showUsername')
   }
 }
 

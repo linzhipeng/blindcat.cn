@@ -118,6 +118,6 @@ new Vue({
       getWidth()
     }, true)
     // 读取本地用户数据缓存
-    _this.$store.commit('updateUserInfo')
+    _this.$store.dispatch('updateUserInfo')
   }
 }).$mount('#app')
