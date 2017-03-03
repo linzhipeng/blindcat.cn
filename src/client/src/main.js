@@ -73,8 +73,8 @@ var routes = [{
     Siderbar
   }
 }, {
-  path: '/login',
-  name: 'login',
+  path: '/user',
+  name: 'user',
   components: {
     Topbar,
     Siderbar,

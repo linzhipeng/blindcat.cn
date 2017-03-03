@@ -27,9 +27,9 @@ const state = {
     url: 'about',
     routerName: 'about'
   }, {
-    name: '登录',
-    url: 'login',
-    routerName: 'login'
+    name: '用户',
+    url: 'user',
+    routerName: 'user'
   }],
   // 当前屏幕宽度
   screenWidth: '',
