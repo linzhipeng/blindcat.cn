@@ -1,14 +1,16 @@
-// 用户注册登录信息
+// 用户信息
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
 const state = {
+  // 用户填写注册登录表单信息
   userForm: {
     username: '',
     email: '',
     password: '',
     verifyCode: ''
   },
+  // 注册登录表单规则
   rules: {
     username: [
       { required: true, message: '请输入昵称', trigger: 'blur' },
@@ -27,15 +29,21 @@ const state = {
       { min: 6, max: 6, message: '验证码长度是6位哦~', trigger: 'blur, change' }
     ]
   },
-  // 当前选项卡的name
-  activeName: 'register'
+  // 当前注册登录选项卡的name
+  activeName: 'register',
+  // 用户个人信息
+  userInfo: '',
+  // 用户是否已经登录
+  hasLogin: false
 }
 
 const getters = {
   userForm: state => state.userForm,
   rules: state => state.rules,
   activeName: state => state.activeName,
-  verifyCode: state => state.verifyCode
+  verifyCode: state => state.verifyCode,
+  userInfo: state => state.userInfo,
+  hasLogin: state => state.hasLogin
 }
 
 const mutations = {
@@ -58,12 +66,23 @@ const mutations = {
         break
     }
   },
-  // 清除注册时的数据并跳转到登录表单
+  // 注册成功后清除数据并跳转到登录表单
   toLogin: (state) => {
     state.userForm.username = ''
     state.userForm.password = ''
     state.userForm.verifyCode = ''
     state.activeName = 'login'
+  },
+  // 从localStorage中获取更新用户数据
+  updateUserInfo: (state) => {
+    let userInfo = JSON.parse(window.localStorage.userInfo)
+    // 如果找得到用户缓存且缓存不为空
+    if (userInfo && userInfo !== '') {
+      state.userInfo = userInfo
+      state.hasLogin = true
+    } else {
+      state.hasLogin = false
+    }
   }
 }
 

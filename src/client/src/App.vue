@@ -5,7 +5,8 @@
     <!-- 1列布局居中容器 -->
     <div class="main1">
       <div class="container">
-        <router-view name="Register"></router-view>
+        <router-view name="Register" v-if="!hasLogin"></router-view>
+        <router-view name="UserCenter" v-if="hasLogin"></router-view>
         <router-view name="NewArticle"></router-view>
         <router-view name="ArticleDetail"></router-view>
       </div>
@@ -29,7 +30,8 @@ export default {
   name: 'app',
   computed: mapGetters({
     topbarName: 'topbarName',
-    screenWidth: 'screenWidth'
+    screenWidth: 'screenWidth',
+    hasLogin: 'hasLogin'
   })
 }
 </script>

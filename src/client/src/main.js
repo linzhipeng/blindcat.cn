@@ -12,6 +12,7 @@ import TagsList from './components/TagsList.vue'
 import NewArticle from './components/NewArticle.vue'
 import ArticleDetail from './components/ArticleDetail.vue'
 import Register from './components/Register.vue'
+import UserCenter from './components/UserCenter.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueSimplemde from 'vue-simplemde' // markdown编辑器
@@ -78,7 +79,8 @@ var routes = [{
   components: {
     Topbar,
     Siderbar,
-    Register
+    Register,
+    UserCenter
   }
 }, {
   path: '/articleDetail/:id',
@@ -115,5 +117,7 @@ new Vue({
     window.addEventListener('resize', function () {
       getWidth()
     }, true)
+    // 读取本地用户数据缓存
+    _this.$store.commit('updateUserInfo')
   }
 }).$mount('#app')
