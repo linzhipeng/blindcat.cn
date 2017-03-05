@@ -8,7 +8,7 @@ fs.mkdir = Promise.promisify(fs.mkdir)
 var multer = require("multer")
 var bodyParser = require('body-parser')
 var confug = require('../config/config.js')
-var userCheck = require('../common/userCheck.js')
+var userTokenClass = require('../common/userTokenClass.js')
 
 // 实例化模块
 var app = express()
@@ -21,27 +21,41 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        let destDir = 'uploads/'+ req.headers.userid +'/'
-        fs
-            .stat(destDir)// 查询当前路径是否存在
-            .then(stats => {// 路径已存在
+        let userId = req.headers.userid
+        let token = req.headers.token
+        let destDir = 'uploads/'+ userId +'/'
+        var checkUser = new userTokenClass(userId, token)
+        // 查询当前用户是否已经登录
+        checkUser.checkToken()
+            // 查询当前路径是否存在)
+            .then(() => {
+                return fs.stat(destDir)
+            })
+            // 路径已存在
+            .then(stats => {
                 if (stats.isDirectory()) {// 目录路径已存在
-                    Promise.resolve()
+                    return Promise.resolve()
                 }
             })
             .catch(e => {
-                if (e.code === 'ENOENT') {// 目录不存在
-                    // 创建目录
-                    fs.mkdir(destDir)
-                } else {// 发生错误
-                    Promise.reject(e)
+                if (e.cause) {
+                    if (e.cause.code === 'ENOENT') {// 目录不存在
+                        // 创建目录
+                        fs.mkdir(destDir)
+                    } else {// 发生其他错误
+                        return Promise.reject(e)
+                    }
+                } else {
+                    console.log(e)
+                    return Promise.reject(e)
                 }
             })
             .then(() => {// 定义存储目录
                 cb(null, destDir)
             })
-            .catch(e => {
+            .catch(e => {// 错误处理
                 console.log(e)
+                cb(e)
             })
     },
     filename: function (req, file, cb) {
@@ -50,21 +64,24 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '.' + suffix[suffix.length - 1])
     }
 })
-var upload = multer({ storage: storage })
+var upload = multer({ storage: storage }).single('avatar')
 
 router
-    .post('/', upload.single('avatar'), function (req, res, next) {
-        if (req.file) {
-            res.send({
-                state: true,
-                info: '文件上传成功'
-            })
-        } else {
-            res.send({
-                state: false,
-                info: '文件上传失败！'
-            })
-        }
+    .post('/', function (req, res, next) {
+        // 调用中间件程序，捕捉multer发出的错误
+        upload(req, res, function (err) {
+            if (err) {
+                res.send({
+                    state: false,
+                    info: err
+                })
+            } else {
+                res.send({
+                    state: true,
+                    info: '文件上传成功'
+                })
+            }
+        })
     });
 
 module.exports = router

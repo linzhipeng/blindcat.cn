@@ -84,18 +84,18 @@ var userTokenClass = (function () {
 								if (data.token === this.token) {// token验证通过
 									return Promise.resolve()
 								} else {// token验证失败
-									this.clearToken()
-									return Promise.reject('验证出错！请重新登录尝试！')
+									// this.clearToken()
+									throw '验证出错！请重新登录尝试！'
 								}
 							} else {// token已过期
-								this.clearToken()
-								return Promise.reject('登录已过期，请重新登录！')
+								// this.clearToken()
+								throw '登录已过期，请重新登录！'
 							}
 						} else {// 不存在token
-							return Promise.reject('请先进行登录')
+							throw '请先进行登录'
 						}
 					} else {// 不存在该用户
-						return Promise.reject('请先进行注册')
+						throw '请先进行注册'
 					}
 				})
 		},
