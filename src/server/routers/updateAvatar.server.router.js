@@ -27,7 +27,7 @@ var storage = multer.diskStorage({
         var checkUser = new userTokenClass(userId, token)
         // 查询当前用户是否已经登录
         checkUser.checkToken()
-            // 查询当前路径是否存在)
+            // 查询当前路径是否存在)  
             .then(() => {
                 return fs.stat(destDir)
             })
@@ -46,7 +46,6 @@ var storage = multer.diskStorage({
                         return Promise.reject(e)
                     }
                 } else {
-                    console.log(e)
                     return Promise.reject(e)
                 }
             })
@@ -54,7 +53,6 @@ var storage = multer.diskStorage({
                 cb(null, destDir)
             })
             .catch(e => {// 错误处理
-                console.log(e)
                 cb(e)
             })
     },
