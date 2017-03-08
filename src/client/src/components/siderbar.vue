@@ -48,6 +48,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    z-index: 10;
   }
 
   .mask {
@@ -61,6 +62,7 @@
   }
 
   .siderbar ul {
+    margin-top: 0;
     width: 15rem;
     height: 100%;
     background-color: #fff;
