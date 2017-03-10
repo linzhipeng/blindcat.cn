@@ -21,14 +21,14 @@ app.all('*', function(req, res, next) {
 });
 
 // 路由转发
-var index = resolve  => require(['./routers/index.server.router'], resolve)
-var article = resolve  => require(['./routers/article.server.router'], resolve)
-var newArticle = resolve  => require(['./routers/newArticle.server.router'], resolve)
-var articleDetail = resolve  => require(['./routers/articleDetail.server.router'], resolve)
-var register = resolve  => require(['./routers/register.server.router'], resolve)
-var login = resolve  => require(['./routers/login.server.router'], resolve)
-var sendEmail = resolve  => require(['./routers/sendEmail.server.router'], resolve)
-var updateAvatar = resolve  => require(['./routers/updateAvatar.server.router'], resolve)
+var index = require('./routers/index.server.router')
+var article = require('./routers/article.server.router')
+var newArticle = require('./routers/newArticle.server.router')
+var articleDetail = require('./routers/articleDetail.server.router')
+var register = require('./routers/register.server.router')
+var login = require('./routers/login.server.router')
+var sendEmail = require('./routers/sendEmail.server.router')
+var updateAvatar = require('./routers/updateAvatar.server.router')
 
 // 设置使用handels模板引擎
 app.set('views', path.join(__dirname, 'views'));
