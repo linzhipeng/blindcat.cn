@@ -4,15 +4,16 @@ import Vuex from 'vuex'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 
-import App from './App'
-import Topbar from './components/Topbar.vue'
-import Siderbar from './components/Siderbar.vue'
-import ArticleList from './components/ArticleList.vue'
-import TagsList from './components/TagsList.vue'
-import NewArticle from './components/NewArticle.vue'
-import ArticleDetail from './components/ArticleDetail.vue'
-import Register from './components/Register.vue'
-import UserCenter from './components/UserCenter.vue'
+const App = resolve => require(['./App'], resolve)
+const Topbar = resolve => require(['./components/Topbar.vue'], resolve)
+const Siderbar = resolve => require(['./components/Siderbar.vue'], resolve)
+const ArticleList = resolve => require(['./components/ArticleList.vue'], resolve)
+const TagsList = resolve => require(['./components/TagsList.vue'], resolve)
+const NewArticle = resolve => require(['./components/NewArticle.vue'], resolve)
+const ArticleDetail = resolve => require(['./components/ArticleDetail.vue'], resolve)
+const Register = resolve => require(['./components/Register.vue'], resolve)
+const UserCenter = resolve => require(['./components/UserCenter.vue'], resolve)
+
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueSimplemde from 'vue-simplemde' // markdown编辑器
