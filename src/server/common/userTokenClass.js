@@ -60,7 +60,7 @@ var userTokenClass = (function () {
 								'wechat': data.account.wechat || '',
 								'phone': data.account.phone || '',
 							},
-							'avatar': data.avatar || '',
+							'avatar': data.avatar,
 							'userIntro': data.userIntro || '',
 							'birthday': data.birthday || '',
 						})

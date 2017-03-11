@@ -91,6 +91,19 @@ const mutations = {
       state.activeName = 'login'// 退出登录后用户界面切换到登录表单
       state.hasLogin = false
     }
+  },
+  // 更新用户本地资料缓存
+  updateUserLocalStorage: (state, data) => {
+    var newData = JSON.parse(window.localStorage.userInfo)
+    switch (data.name) {
+      case 'avatar':
+        state.userInfo.avatar = data.value
+        newData.avatar = data.value
+        window.localStorage.userInfo = JSON.stringify(newData)
+        break
+      default:
+        break
+    }
   }
 }
 

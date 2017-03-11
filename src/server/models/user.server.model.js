@@ -38,7 +38,7 @@ var userSchema = new mongoose.Schema({
 	},
 	avatar: {// 头像地址
 		type: String,
-		default: '/static/images/blindcat.jpg'
+		default: 'static/images/blindcat.jpg'
 	},
 	account: {// 账号信息
 		email: {type: String}, // email

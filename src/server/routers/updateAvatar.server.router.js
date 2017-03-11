@@ -2,6 +2,8 @@
 
 var express = require('express')
 var Promise = require('bluebird')
+var mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 var fs = require("fs")
 fs.stat = Promise.promisify(fs.stat)
 fs.mkdir = Promise.promisify(fs.mkdir)
@@ -10,6 +12,8 @@ var bodyParser = require('body-parser')
 var confug = require('../config/config.js')
 var userTokenClass = require('../common/userTokenClass.js')
 
+var user = mongoose.model('user')
+
 // 实例化模块
 var app = express()
 var router = express.Router()
@@ -17,17 +21,16 @@ var router = express.Router()
 // bodyParser设置解析http请求体
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-// router.use(multer({ dest: 'uploads/' }).single('avatar'))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         let userId = req.headers.userid
         let token = req.headers.token
-        let destDir = 'uploads/'+ userId +'/'
+        let destDir = 'public/users/'+ userId +'/'
         var checkUser = new userTokenClass(userId, token)
         // 查询当前用户是否已经登录
         checkUser.checkToken()
-            // 查询当前路径是否存在)  
+            // 查询当前路径是否存在)
             .then(() => {
                 return fs.stat(destDir)
             })
@@ -74,10 +77,33 @@ router
                     info: err
                 })
             } else {
-                res.send({
-                    state: true,
-                    info: '文件上传成功'
-                })
+                user
+                    .findByIdAndUpdate(req.headers.userid, { $set: {
+                        'avatar': 'static/users/' + req.headers.userid + '/' +req.file.filename
+                    }}, {new: true})
+                    .exec()
+                    .then(data => {
+                        if (data) {
+                            res.send({
+                                state: true,
+                                info: '文件上传成功',
+                                data: {
+                                    url: data.avatar
+                                }
+                            })
+                        } else {
+                            res.send({
+                                state: false,
+                                info: '存储头像路径失败！'
+                            })
+                        }
+                    })
+                    .catch(e => {
+                        res.send({
+                            state: false,
+                            info: e
+                        })
+                    })
             }
         })
     });
