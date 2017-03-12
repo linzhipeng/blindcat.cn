@@ -28,6 +28,10 @@ var storage = multer.diskStorage({
         let token = req.headers.token
         let destDir = 'public/users/'+ userId +'/'
         var checkUser = new userTokenClass(userId, token)
+        if (!userId || !token) {
+            cb('请先进行登录！')
+            return false
+        }
         // 查询当前用户是否已经登录
         checkUser.checkToken()
             // 查询当前路径是否存在)
@@ -77,33 +81,42 @@ router
                     info: err
                 })
             } else {
-                user
-                    .findByIdAndUpdate(req.headers.userid, { $set: {
-                        'avatar': 'static/users/' + req.headers.userid + '/' +req.file.filename
-                    }}, {new: true})
-                    .exec()
-                    .then(data => {
-                        if (data) {
-                            res.send({
-                                state: true,
-                                info: '文件上传成功',
-                                data: {
-                                    url: data.avatar
-                                }
-                            })
-                        } else {
+                // 判断是否有文件被接收
+                if (req.file) {
+                    // 存储上传的新头像地址
+                    user
+                        .findByIdAndUpdate(req.headers.userid, { $set: {
+                            'avatar': 'static/users/' + req.headers.userid + '/' +req.file.filename
+                        }}, {new: true})
+                        .exec()
+                        .then(data => {
+                            if (data) {
+                                res.send({
+                                    state: true,
+                                    info: '头像修改成功',
+                                    data: {
+                                        url: data.avatar
+                                    }
+                                })
+                            } else {
+                                res.send({
+                                    state: false,
+                                    info: '存储头像路径失败！'
+                                })
+                            }
+                        })
+                        .catch(e => {
                             res.send({
                                 state: false,
-                                info: '存储头像路径失败！'
+                                info: e
                             })
-                        }
-                    })
-                    .catch(e => {
-                        res.send({
-                            state: false,
-                            info: e
                         })
+                } else {
+                    res.send({
+                        state: false,
+                        info: '未收到任何图片文件'
                     })
+                }
             }
         })
     });
