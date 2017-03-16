@@ -1,15 +1,22 @@
 <template>
   <div>
-    <el-upload
-      class="avatar-uploader"
-      :action="updateAvatarUrl"
-      name="avatar"
+    <my-upload
+      field="avatar"
+      v-model="show"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+      :width="250"
+      :height="250"
+      :url="updateAvatarUrl"
       :headers="getHeaders"
-      :show-file-list="false"
-      :on-success="handleAvatarScucess"
-      :before-upload="beforeAvatarUpload">
-      <img :src="apiUrl + userInfo.avatar " class="avatar">
-    </el-upload>
+      img-format="png"
+      class="avatar_clip"
+    ></my-upload>
+    <div class="avatar" @click="toggleShow">
+      <img :src="apiUrl + userInfo.avatar">
+      <i class="el-icon-edit mask"></i>
+    </div>
     <h1>欢迎你！{{userInfo.username}}</h1>
     <el-button type="primary" @click="logout">退出登录</el-button>
   </div>
@@ -17,13 +24,18 @@
 
 <script type="text/javascript">
   import { mapGetters, mapActions } from 'vuex'
+  import myUpload from 'vue-image-crop-upload/upload-2.vue'
   import globalConfig from '../config/config.js'
   export default {
     name: 'userCenter',
+    components: {
+      'my-upload': myUpload
+    },
     data () {
       return {
         apiUrl: globalConfig.apiUrl,
-        updateAvatarUrl: globalConfig.apiUrl + 'updateAvatar'
+        updateAvatarUrl: globalConfig.apiUrl + 'updateAvatar',
+        show: false
       }
     },
     computed: {
@@ -41,31 +53,61 @@
       ...mapActions([
         'logout'
       ]),
-      handleAvatarScucess (res, file) {
+      toggleShow () {
+        this.show = !this.show
+      },
+      cropSuccess (imgDataUrl, field) {
+        console.log('-------- crop success --------')
+        this.imgDataUrl = imgDataUrl
+      },
+      cropUploadSuccess (jsonData, field) {
         this.$store.commit('updateUserLocalStorage', {
           name: 'avatar',
-          value: file.response.data.url
+          value: jsonData.data.url
         })
       },
-      beforeAvatarUpload (file) {
-        const isJPG = file.type === 'image/jpeg'
-        const isLt2M = file.size / 1024 / 1024 < 2
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!')
-        }
-        return isJPG && isLt2M
+      cropUploadFail (status, field) {
+        console.log('-------- upload fail --------')
+        console.log(status)
+        console.log('field: ' + field)
       }
     }
   }
 </script>
 
-<style scoped>
+<style>
   .avatar {
     width: 150px;
     height: 150px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .avatar:hover .mask {
+    display: block;
+  }
+
+  .avatar .mask {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    line-height: 150px;
+    text-align: center;
+    font-size: 20px;
+    display: none;
+  }
+
+  .avatar img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .avatar_clip.vue-image-crop-upload .vicp-wrap {
+    max-width: 600px;
+    width: 80%;
   }
 </style>
