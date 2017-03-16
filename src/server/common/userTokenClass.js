@@ -85,17 +85,29 @@ var userTokenClass = (function () {
 									return Promise.resolve()
 								} else {// token验证失败
 									// this.clearToken()
-									throw '验证出错！请重新登录尝试！'
+									throw {
+										'code': 403,
+										'info': '验证出错！请重新登录尝试！'
+									}
 								}
 							} else {// token已过期
 								// this.clearToken()
-								throw '登录已过期，请重新登录！'
+								throw {
+									'code': 403,
+									'info': '登录已过期，请重新登录！'
+								}
 							}
 						} else {// 不存在token
-							throw '请先进行登录'
+							throw {
+								'code': 403,
+								'info': '请先进行登录'
+							}
 						}
 					} else {// 不存在该用户
-						throw '请先进行注册'
+						throw {
+							'code': 403,
+							'info': '请先进行注册'
+						}
 					}
 				})
 		},

@@ -77,10 +77,19 @@ router
         // 调用中间件程序，捕捉multer发出的错误
         upload(req, res, function (err) {
             if (err) {
-                res.send({
-                    state: false,
-                    info: err
-                })
+                if (err.code && err.code === 403) {
+                    res
+                        .status(403)
+                        .send({
+                            state: false,
+                            info: err.info
+                        })
+                } else {
+                    res.send({
+                        state: false,
+                        info: err
+                    })
+                }
             } else {
                 // 判断是否有文件被接收
                 if (req.file) {
