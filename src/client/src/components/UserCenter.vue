@@ -24,6 +24,7 @@
 
 <script type="text/javascript">
   import { mapGetters, mapActions } from 'vuex'
+  import { Notification } from 'element-ui'
   import myUpload from 'vue-image-crop-upload/upload-2.vue'
   import globalConfig from '../config/config.js'
   export default {
@@ -61,10 +62,18 @@
         this.imgDataUrl = imgDataUrl
       },
       cropUploadSuccess (jsonData, field) {
-        this.$store.commit('updateUserLocalStorage', {
-          name: 'avatar',
-          value: jsonData.data.url
-        })
+        if (jsonData.state) {
+          this.$store.commit('updateUserLocalStorage', {
+            name: 'avatar',
+            value: jsonData.data.url
+          })
+        } else {
+          Notification({
+            title: '出错了',
+            message: jsonData.info,
+            type: 'error'
+          })
+        }
       },
       cropUploadFail (status, field) {
         console.log('-------- upload fail --------')
