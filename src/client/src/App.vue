@@ -5,6 +5,8 @@
     <!-- 1列布局居中容器 -->
     <div class="main1">
       <div class="container">
+        <router-view name="TagsList"></router-view>
+        <router-view name="ArticleList"></router-view>
         <router-view name="Register" v-if="!hasLogin"></router-view>
         <router-view name="UserCenter" v-if="hasLogin"></router-view>
         <router-view name="NewArticle"></router-view>
@@ -13,14 +15,14 @@
     </div>
 
     <!-- 左右2列布局 -->
-    <div class="main2">
+    <!--<div class="main2">
       <div class="left_box">
         <router-view name="ArticleList"></router-view>
       </div>
       <div class="right_box" v-if="screenWidth > 804">
         <router-view name="TagsList"></router-view>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 

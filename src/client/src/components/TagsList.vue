@@ -2,7 +2,6 @@
 
 <template>
   <div id="TagsList">
-    <div class="hot_tags">热门标签</div>
     <div class="tags_div">
       <a href="#">Vue</a>
       <a href="#">前端</a>
@@ -26,7 +25,8 @@
 
 <style scoped>
   #TagsList {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     width: 100%;
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
@@ -58,6 +58,7 @@
     align-items: flex-start;
     flex-wrap: wrap;
     padding-top: 1rem;
+    justify-content: center;
   }
 
   .tags_div a{
@@ -67,9 +68,9 @@
     border: 1px solid #41b883;
     color: #41b883;
     font-size: 1.3rem;
-    line-height: 1.8rem;
+    line-height: 2.2rem;
     border-radius: 4px;
-    padding: 0.2rem 0.8rem;
+    padding: 0.1rem 1.2rem;
     margin: 1rem 0.5rem 0 0.5rem;
   }
 

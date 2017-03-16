@@ -35,15 +35,16 @@ var routes = [{
   components: {
     Topbar,
     Siderbar,
-    ArticleList,
-    TagsList
+    ArticleList
   }
 }, {
   path: '/tags',
   name: 'tags',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    ArticleList,
+    TagsList
   }
 }, {
   path: '/newarticle',

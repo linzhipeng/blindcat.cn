@@ -9,7 +9,7 @@ const state = {
       routerName: 'home'
     },
     tags: {
-      name: '分类',
+      name: '标签',
       url: 'tags',
       routerName: 'tags'
     },
