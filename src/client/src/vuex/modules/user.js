@@ -75,6 +75,12 @@ const mutations = {
   },
   // 退出登录，清除用户登录数据
   logout: (state) => {
+    // 如果state总有用户的email，退出登录前自动帮用户填写email被表单
+    if (state.userInfo.account) {
+      if (state.userInfo.account.email && state.userInfo.account.email !== '') {
+        state.userForm.email = state.userInfo.account.email
+      }
+    }
     window.localStorage.userInfo = ''
     state.userInfo = ''
     state.activeName = 'login'// 退出登录后用户界面切换到登录表单

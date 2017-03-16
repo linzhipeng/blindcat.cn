@@ -58,7 +58,6 @@
         this.show = !this.show
       },
       cropSuccess (imgDataUrl, field) {
-        console.log('-------- crop success --------')
         this.imgDataUrl = imgDataUrl
       },
       cropUploadSuccess (jsonData, field) {
@@ -76,9 +75,14 @@
         }
       },
       cropUploadFail (status, field) {
-        console.log('-------- upload fail --------')
-        console.log(status)
-        console.log('field: ' + field)
+        if (status === 403) {
+          Notification({
+            title: '出错了',
+            message: '请重新登录！',
+            type: 'error'
+          })
+        }
+        this.logout()
       }
     }
   }
