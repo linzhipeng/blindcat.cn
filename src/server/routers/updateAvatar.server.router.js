@@ -7,6 +7,7 @@ mongoose.Promise = require('bluebird')
 var fs = require("fs")
 fs.stat = Promise.promisify(fs.stat)
 fs.mkdir = Promise.promisify(fs.mkdir)
+fs.readdir = Promise.promisify(fs.readdir)
 var multer = require("multer")
 var bodyParser = require('body-parser')
 var confug = require('../config/config.js')
@@ -98,6 +99,22 @@ router
                                         url: data.avatar
                                     }
                                 })
+                                // 删除旧头像
+                                fs.readdir('public/users/' + req.headers.userid)
+                                    .then(files => {
+                                        files.forEach( function (file){
+                                            if (file !== req.file.filename) {
+                                                fs.unlink('public/users/' + req.headers.userid + '/' +file, function(err) {
+                                                    if (err) {
+                                                        console.log(e)
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    })
+                                    .catch(e => {
+                                        console.log(e)
+                                    })
                             } else {
                                 res.send({
                                     state: false,
