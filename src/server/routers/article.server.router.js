@@ -16,10 +16,11 @@ var data
 router
 	.get('/', function(req, res){
 		article
-			.find(['title', 'content', 'abstract'])
+			// .find(['title', 'content', 'abstract'])
+			.find({'tags': {$all: ['不错']}})
 			// .skip(1)
 			// .limit(10)
-			.select('_id title abstract publishTime readTimes aticleCollect likeNum')
+			.select('_id title abstract publishTime readTimes aticleCollect likeNum tags')
 			.sort([['publishTime', -1]])
 			.exec(function(err, aticle){
 				if(err) return handleError(err);
