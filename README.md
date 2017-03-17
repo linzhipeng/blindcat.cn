@@ -1,10 +1,23 @@
-# 瞎猫的Node + Vue单页应用开发
-**进度：30%**
+# 瞎猫的Node + Vue 的单页应用博客
+**进度：60%**
+**前端演示地址： [http://blindcat.cn](http://blindcat.cn)**
+**后端演示地址：[http://api.blindcat.cn](http://api.blindcat.cn)**
+**欢迎 Star**
 
-## 前端演示地址
-[http://blindcat.cn](http://blindcat.cn)
-## 后端演示地址
-[http://api.blindcat.cn](http://api.blindcat.cn)
+## 技术栈
+**前端**
+* Vue.js
+* Vuex
+* Vue Router
+* Webpack
+* Element-ui
+* bluebird
+
+**后端**
+* Node.js
+* Express
+* MongoDB
+* bluebird
 
 ## 前端安装
 
@@ -28,6 +41,11 @@ cd ./src/server
 
 # 安装依赖
 npm install
+
+# 建立用户资料目录 users
+cd public
+mkdir users -m 777
+cd ..
 
 # 运行
 node app
