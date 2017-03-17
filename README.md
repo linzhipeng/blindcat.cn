@@ -51,3 +51,6 @@ cd ..
 node app
 ```
 访问 `localhost:8081`
+
+## License
+MIT
