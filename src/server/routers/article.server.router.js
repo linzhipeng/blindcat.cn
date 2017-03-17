@@ -17,8 +17,8 @@ router
 	.get('/', function(req, res){
 		// 按照标签搜索
 		let searchType = {};
-		if (req.query.types) {
-			searchType = {'tags': {$all: [req.query.types]}}
+		if (req.query.tags  && req.query.tags !== 'all') {
+			searchType = {'tags': {$all: [req.query.tags]}}
 		}
 		// 对象解构赋值
 		// pageNum  —— 第几页（默认1）

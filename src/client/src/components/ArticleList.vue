@@ -38,7 +38,7 @@
 </template>
 
 <script type="text/javascript">
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'ArticleList',
     computed: {
@@ -46,13 +46,21 @@
         articleList: 'articleList'
       })
     },
-    methods: {
-      ...mapActions([
-        'initArticleList'
-      ])
-    },
     created () {
-      this.initArticleList()
+      // 获取指定文章标签的文章列表
+      this.$store.dispatch('getArticleList', {
+        'tags': this.$route.params.tags,
+        'pageNum': this.$route.params.pageNum || 1
+      })
+    },
+    watch: {
+      '$route' (to, from) {
+        // 对该组件路由变化作出响应...
+        this.$store.dispatch('getArticleList', {
+          'tags': to.params.tags,
+          'pageNum': to.params.pageNum || 1
+        })
+      }
     }
   }
 </script>

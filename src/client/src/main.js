@@ -47,6 +47,24 @@ var routes = [{
     TagsList
   }
 }, {
+  path: '/tags/:tags',
+  name: 'tags',
+  components: {
+    Topbar,
+    Siderbar,
+    ArticleList,
+    TagsList
+  }
+}, {
+  path: '/tags/:tags/:pageNum',
+  name: 'tagsPage',
+  components: {
+    Topbar,
+    Siderbar,
+    ArticleList,
+    TagsList
+  }
+}, {
   path: '/newarticle',
   name: 'newarticle',
   components: {

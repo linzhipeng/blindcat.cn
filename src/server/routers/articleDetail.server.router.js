@@ -19,7 +19,7 @@ router
 			article
 				.findOne({'_id': req.query.id})
 				.exec(function(err, articleData){
-					if(err) return handleError(err);
+					if(err) return err;
 					data = {
 						'state': true,
 						'data': articleData

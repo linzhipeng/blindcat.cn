@@ -3,16 +3,19 @@
 <template>
   <div id="TagsList">
     <div class="tags_div">
-      <a href="#">Vue</a>
-      <a href="#">前端</a>
-      <a href="#">框架</a>
-      <a href="#">node</a>
-      <a href="#">JavaScript</a>
-      <a href="#">数据结构</a>
-      <a href="#">React</a>
-      <a href="#">Angular</a>
-      <a href="#">开源</a>
-      <a href="#">webpack</a>
+      <router-link to="/tags/散文">散文</router-link>
+      <router-link to="/tags/css">css</router-link>
+      <router-link to="/tags/测试">测试</router-link>
+      <router-link to="/tags/Vue">Vue</router-link>
+      <router-link to="/tags/前端">前端</router-link>
+      <router-link to="/tags/框架">框架</router-link>
+      <router-link to="/tags/node">node</router-link>
+      <router-link to="/tags/JavaScript">JavaScript</router-link>
+      <router-link to="/tags/数据结构">数据结构</router-link>
+      <router-link to="/tags/React">React</router-link>
+      <router-link to="/tags/Angular">Angular</router-link>
+      <router-link to="/tags/开源">开源</router-link>
+      <router-link to="/tags/webpack">webpack</router-link>
     </div>
   </div>
 </template>
