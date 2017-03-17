@@ -8,6 +8,7 @@
         <router-view name="TagsList"></router-view>
         <router-view name="ArticleList"></router-view>
         <router-view name="Register" v-if="!hasLogin"></router-view>
+        <router-view name="About"></router-view>
         <router-view name="UserCenter" v-if="hasLogin"></router-view>
         <router-view name="NewArticle"></router-view>
         <router-view name="ArticleDetail"></router-view>

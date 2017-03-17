@@ -12,6 +12,7 @@ const TagsList = resolve => require(['./components/TagsList.vue'], resolve)
 const NewArticle = resolve => require(['./components/NewArticle.vue'], resolve)
 const ArticleDetail = resolve => require(['./components/ArticleDetail.vue'], resolve)
 const Register = resolve => require(['./components/Register.vue'], resolve)
+const About = resolve => require(['./components/About.vue'], resolve)
 const UserCenter = resolve => require(['./components/UserCenter.vue'], resolve)
 
 import VueRouter from 'vue-router'
@@ -77,7 +78,8 @@ var routes = [{
   name: 'about',
   components: {
     Topbar,
-    Siderbar
+    Siderbar,
+    About
   }
 }, {
   path: '/user',
