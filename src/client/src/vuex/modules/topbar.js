@@ -18,16 +18,6 @@ const state = {
       url: 'newarticle',
       routerName: 'newarticle'
     },
-    resources: {
-      name: '资源',
-      url: 'resources',
-      routerName: 'resources'
-    },
-    search: {
-      name: '搜索',
-      url: 'search',
-      routerName: 'search'
-    },
     about: {
       name: '关于',
       url: 'about',

@@ -73,20 +73,6 @@ var routes = [{
     NewArticle
   }
 }, {
-  path: '/resources',
-  name: 'resources',
-  components: {
-    Topbar,
-    Siderbar
-  }
-}, {
-  path: '/search',
-  name: 'search',
-  components: {
-    Topbar,
-    Siderbar
-  }
-}, {
   path: '/about',
   name: 'about',
   components: {

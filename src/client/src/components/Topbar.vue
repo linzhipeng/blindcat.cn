@@ -105,6 +105,10 @@
     justify-content: center;
   }
 
+  ul {
+    -webkit-padding-start: 0;
+  }
+
   #topbar li {
     list-style: none;
     height: 40px;
