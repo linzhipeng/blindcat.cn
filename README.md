@@ -1,8 +1,11 @@
 # 瞎猫的Node + Vue 的单页应用博客
 **进度：60%**
+
 **前端演示地址： [http://blindcat.cn](http://blindcat.cn)**
+
 **后端演示地址：[http://api.blindcat.cn](http://api.blindcat.cn)**
-**欢迎 Star**
+
+**喜欢请 Star 鼓励一下**
 
 ## 技术栈
 **前端**
