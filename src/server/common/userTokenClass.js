@@ -73,6 +73,12 @@ var userTokenClass = (function () {
 
 		// 检查并返回当前用户token凭证及用户基本信息
 		checkToken: function () {
+			if (this.userId === '' || this.token === '') {
+				return Promise.reject({
+					'code': 403,
+					'info': '验证出错！请登录后再操作！'
+				})
+			}
 			return user
 				.findOne({'_id': this.userId})
 				.exec()

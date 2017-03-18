@@ -93,7 +93,13 @@ const actions = {
   // 提交新文章
   updateNewArticle (context) {
     context.commit('isLoading')
-    axios.post(globalConfig.apiUrl + 'newarticle', {
+    let instance = axios.create({
+      headers: {
+        'token': context.getters.userInfo.token,
+        'userid': context.getters.userInfo.userId
+      }
+    })
+    instance.post(globalConfig.apiUrl + 'newarticle', {
       title: context.getters.newArticle.title,
       content: context.getters.newArticle.content,
       tags: context.getters.newArticle.tags,
@@ -109,17 +115,27 @@ const actions = {
             message: '投稿成功！',
             type: 'success'
           })
-        } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
-          })
         }
       }
     })
     .catch(function (error) {
-      console.log(error)
+      context.commit('notLoading')
+      if (error.response) {
+        if (error.response.status === 403) {
+          context.commit('logout')
+          Notification({
+            title: '出错了',
+            message: error.response.data.info,
+            type: 'error'
+          })
+        }
+      } else {
+        Notification({
+          title: '出错了',
+          message: error.message,
+          type: 'error'
+        })
+      }
     })
   }
 }
