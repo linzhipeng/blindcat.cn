@@ -46,8 +46,10 @@ cd ./src/server
 npm install
 
 # 建立用户资料目录 users
+# 建立文章图片目录 article-image
 cd public
 mkdir users -m 777
+mkdir article-image -m 777
 cd ..
 
 # 运行
