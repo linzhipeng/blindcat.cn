@@ -8,13 +8,16 @@
         class="upload-demo"
         type="drag"
         name="articleImage"
+        :show-file-list="false"
         :action="updateImagesUrl"
         :headers="getHeaders"
+        :before-upload="beforeAvatarUpload"
         :on-success="hasUploadImage"
+        :on-error="uploadErr"
         mutiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过2mb</div>
       </el-upload>
     </el-dialog>
     <!-- 标题 -->
@@ -106,6 +109,7 @@
 
 <script type="text/javascript">
   import { mapGetters, mapMutations, mapActions } from 'vuex'
+  import { Notification } from 'element-ui'
   import { markdownEditor } from 'vue-simplemde'
   import 'github-markdown-css'
   import globalConfig from '../config/config.js'
@@ -130,8 +134,6 @@
             action: (editor) => {
               this.dialogTableVisible = true
               this.editor = editor
-              // editor.options.insertTexts.image = ['![](', '#url#)']
-              // editor.drawImage()
             },
             className: 'fa fa-image',
             title: '上传图片'
@@ -164,7 +166,8 @@
         'removeTag'
       ]),
       ...mapActions([
-        'updateNewArticle'
+        'updateNewArticle',
+        'logout'
       ]),
       // 记录键入的新文章元素
       recordNewArticle (name, value) {
@@ -193,15 +196,41 @@
         this.newTag = ''
       },
       hasUploadImage (res, file, fileList) {
+        console.log(file)
+        console.log(fileList)
         if (res.state) {
           this.editor.options.insertTexts.image = ['![](', globalConfig.apiUrl + res.data.url + ')']
           this.editor.drawImage()
           this.dialogTableVisible = false
+        } else {
+          Notification({
+            title: '发生错误',
+            message: res.info,
+            type: 'error'
+          })
         }
-        console.log(res)
-        console.log(file)
-        console.log(fileList)
-        console.log(123)
+      },
+      uploadErr (err, file, fileList) {
+        if (err.status === 403) {
+          Notification({
+            title: '出错了',
+            message: '请重新登录！',
+            type: 'error'
+          })
+        }
+        this.logout()
+      },
+      beforeAvatarUpload (file) {
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+        const isLt2M = file.size / 1024 / 1024 < 2
+
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG/PNG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
       }
     }
   }
@@ -213,7 +242,7 @@
     width: 80%;
     margin: 10px auto;
   }
-
+  
   .upload-demo .el-dragger  {
     width: 100%;
   }

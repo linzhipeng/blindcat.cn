@@ -19,15 +19,12 @@ var router = express.Router()
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
 
-// 定义一个变量存储日文件夹名（年-月-日）
-let nowDayStr = ''
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         let userId = req.headers.userid
         let token = req.headers.token
         let nowDate = new Date()
-        nowDayStr = nowDate.getFullYear() + '-' + (nowDate.getMonth() + 1) + '-' + nowDate.getDate()
-        let destDir = 'public/article-image/'+ nowDayStr +'/'
+        let destDir = 'public/article-image/'+ userId +'/'
         var checkUser = new userTokenClass(userId, token)
         if (!userId || !token) {
             cb('请先进行登录！')
@@ -97,7 +94,7 @@ router
                         state: true,
                         info: '文章图片上传成功',
                         data: {
-                            url: 'static/article-image/' + nowDayStr + '/' +req.file.filename
+                            url: 'static/article-image/' + req.headers.userid + '/' +req.file.filename
                         }
                     })
                 } else {
