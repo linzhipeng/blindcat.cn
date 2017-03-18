@@ -25,7 +25,7 @@ router
 		})
 	})
 	.post('/', function(req, res, next) {
-		let userId = req.headers.userid || ''
+		let userId = req.headers.userid.match(/^[0-9a-fA-F]{24}$/) ? req.headers.userid : ''
         let token = req.headers.token || ''
 		let checkUser = new userTokenClass(userId, token)
 

@@ -95,8 +95,8 @@ const actions = {
     context.commit('isLoading')
     let instance = axios.create({
       headers: {
-        'token': context.getters.userInfo.token,
-        'userid': context.getters.userInfo.userId
+        'token': context.getters.userInfo.token || '',
+        'userid': context.getters.userInfo.userId || ''
       }
     })
     instance.post(globalConfig.apiUrl + 'newarticle', {
@@ -114,6 +114,12 @@ const actions = {
             title: '成功',
             message: '投稿成功！',
             type: 'success'
+          })
+        } else {
+          Notification({
+            title: '出错了',
+            message: res.data.info,
+            type: 'error'
           })
         }
       }

@@ -25,7 +25,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        let userId = req.headers.userid || ''
+        let userId = req.headers.userid.match(/^[0-9a-fA-F]{24}$/) ? req.headers.userid : ''
         let token = req.headers.token || ''
         let destDir = 'public/users/'+ userId +'/'
         var checkUser = new userTokenClass(userId, token)
