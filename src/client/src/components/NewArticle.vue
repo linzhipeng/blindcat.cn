@@ -2,6 +2,19 @@
 
 <template>
   <div id="NewArticle">
+    <!--根据topbar状态（即屏幕大小）改变dialog大小-->
+    <el-dialog title="上传图片" v-model="dialogTableVisible" :size="topbarMobile ? 'large' : 'small'">
+      <el-upload
+        class="upload-demo"
+        type="drag"
+        action="//jsonplaceholder.typicode.com/posts/"
+        :on-success="hasUploadImage"
+        mutiple>
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
+    </el-dialog>
     <!-- 标题 -->
     <elInput
       class="input-title"
@@ -109,17 +122,30 @@
             codeSyntaxHighlighting: true, // 开启代码高亮
             highlightingTheme: 'atom-one-light' // 自定义代码高亮主题，可选列表(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
           },
-          toolbar: ['bold', 'italic', 'heading', '|', 'code', 'unordered-list', 'ordered-list', 'link', 'image', 'table', 'quote', '|', 'preview', 'side-by-side', 'fullscreen']
+          toolbar: ['bold', 'italic', 'heading', '|', 'code', 'unordered-list', 'ordered-list', 'link', {
+            name: 'image',
+            action: (editor) => {
+              this.dialogTableVisible = true
+              this.editor = editor
+              // editor.options.insertTexts.image = ['![](', '#url#)']
+              // editor.drawImage()
+            },
+            className: 'fa fa-image',
+            title: '上传图片'
+          }, 'table', 'quote', '|', 'preview', 'side-by-side', 'fullscreen']
         },
         inputVisible: false,
-        newTag: ''
+        newTag: '',
+        dialogTableVisible: false, // 是否显示上传框
+        editor: ''
       }
     },
     computed: {
       ...mapGetters({
         submission: 'submission',
         newArticle: 'newArticle',
-        isLoading: 'isLoading'
+        isLoading: 'isLoading',
+        topbarMobile: 'topbarMobile'
       })
     },
     methods: {
@@ -154,10 +180,25 @@
         this.inputVisible = false
         this.$store.commit('addTags', this.newTag)
         this.newTag = ''
+      },
+      hasUploadImage (res, file, fileList) {
+        console.log(123)
       }
     }
   }
 </script>
+
+<style>
+  .upload-demo {
+    max-width: 360px;
+    width: 80%;
+    margin: 10px auto;
+  }
+
+  .upload-demo .el-dragger  {
+    width: 100%;
+  }
+</style>
 
 <style scoped>
   .input-title {
