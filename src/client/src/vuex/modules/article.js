@@ -50,7 +50,7 @@ const actions = {
       })
       .then(function (res) {
         if (res && res.data.state) {
-          context.commit('updateList', res.data.data)
+          context.commit('updateList', res.data.data.listData)
         }
       })
       .catch(function (error) {
