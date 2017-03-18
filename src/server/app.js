@@ -29,6 +29,7 @@ var register = require('./routers/register.server.router')
 var login = require('./routers/login.server.router')
 var sendEmail = require('./routers/sendEmail.server.router')
 var updateAvatar = require('./routers/updateAvatar.server.router')
+var updateArticleImage = require('./routers/updateArticleImage.server.router')
 
 // 设置使用handels模板引擎
 app.set('views', path.join(__dirname, 'views'));
@@ -50,6 +51,7 @@ app.use('/register', register)
 app.use('/login', login)
 app.use('/sendemail', sendEmail)
 app.use('/updateAvatar', updateAvatar)
+app.use('/updateArticleImage', updateArticleImage)
 
 // 监听端口
 app.listen(config.port, function () {
