@@ -4,6 +4,7 @@
   <div id="NewArticle">
     <!--根据topbar状态（即屏幕大小）改变dialog大小-->
     <el-dialog title="上传图片" v-model="dialogTableVisible" :size="topbarMobile ? 'large' : 'small'">
+      <!--图片上传组件-->
       <el-upload
         class="upload-demo"
         type="drag"
@@ -130,9 +131,12 @@
             highlightingTheme: 'atom-one-light' // 自定义代码高亮主题，可选列表(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
           },
           toolbar: ['bold', 'italic', 'heading', '|', 'code', 'unordered-list', 'ordered-list', 'link', {
+            // 自定义图片上传事件
             name: 'image',
             action: (editor) => {
+              // 调取显示图片上传组件
               this.dialogTableVisible = true
+              // 存储编辑器示例，后面会用来像编辑区添加图片地址
               this.editor = editor
             },
             className: 'fa fa-image',
@@ -154,6 +158,7 @@
         topbarMobile: 'topbarMobile',
         userInfo: 'userInfo'
       }),
+      // 获取生成headers
       getHeaders () {
         return {
           'userid': this.userInfo.userId,
@@ -187,17 +192,31 @@
       recordNewArticleTag (e) {
         this.$store.commit('recordNewArticleTag', e.target.value)
       },
+      // 显示tags输入框
       showInput () {
         this.inputVisible = true
       },
+      // 添加tags
       addTags () {
         this.inputVisible = false
         this.$store.commit('addTags', this.newTag)
         this.newTag = ''
       },
+      // 文章图片上传前进行格式、大小验证
+      beforeAvatarUpload (file) {
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+        const isLt2M = file.size / 1024 / 1024 < 2
+
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG/PNG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
+      },
+      // 文章图片上传成功
       hasUploadImage (res, file, fileList) {
-        console.log(file)
-        console.log(fileList)
         if (res.state) {
           this.editor.options.insertTexts.image = ['![](', globalConfig.apiUrl + res.data.url + ')']
           this.editor.drawImage()
@@ -210,6 +229,7 @@
           })
         }
       },
+      // 文章图片上传错误
       uploadErr (err, file, fileList) {
         if (err.status === 403) {
           Notification({
@@ -219,18 +239,6 @@
           })
         }
         this.logout()
-      },
-      beforeAvatarUpload (file) {
-        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
-        const isLt2M = file.size / 1024 / 1024 < 2
-
-        if (!isJPG) {
-          this.$message.error('上传图片只能是 JPG/PNG 格式!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 2MB!')
-        }
-        return isJPG && isLt2M
       }
     }
   }
