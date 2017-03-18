@@ -3,6 +3,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var mongoose = require('mongoose')
+var Promise = require('bluebird')
+mongoose.Promise = require('bluebird')
 
 var article = mongoose.model('article')
 
@@ -72,16 +74,19 @@ router
 			creativeType: req.body.creativeType,
 			abstract: stringMaxCut(req.body.content.replace(reg, ""), 250)
 		})
-		saveData.save(function(err){
-			if (err) {
-				console.log(err)
-				return false
-			}
-			res.send({
-				'state': true,
-				'info': '投稿成功！'
+		saveData.save()
+			.then(data => {
+				res.send({
+					'state': true,
+					'info': '投稿成功！'
+				})
 			})
-		})
+			.catch(e => {
+				res.send({
+					'state': false,
+					'info': e
+				})
+			})
 	})
 
 module.exports = router

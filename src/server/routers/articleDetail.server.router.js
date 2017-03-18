@@ -3,6 +3,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var config = require('../config/config.js')
 var mongoose = require('mongoose')
+var Promise = require('bluebird')
+mongoose.Promise = require('bluebird')
 
 var article = mongoose.model('article')
 
@@ -18,13 +20,18 @@ router
 		if (req.query.id && req.query.id !== ''){
 			article
 				.findOne({'_id': req.query.id})
-				.exec(function(err, articleData){
-					if(err) return err;
-					data = {
+				.exec()
+				.then(data => {
+					res.send({
 						'state': true,
-						'data': articleData
-					}
-					res.send(data)
+						'data': data
+					})
+				})
+				.catch (e => {
+					res.send({
+						'state': false,
+						'info': e
+					})
 				})
 		} else {
 			res.send({
