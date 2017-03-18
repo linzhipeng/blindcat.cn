@@ -7,7 +7,9 @@
       <el-upload
         class="upload-demo"
         type="drag"
-        action="//jsonplaceholder.typicode.com/posts/"
+        name="articleImage"
+        :action="updateImagesUrl"
+        :headers="getHeaders"
         :on-success="hasUploadImage"
         mutiple>
         <i class="el-icon-upload"></i>
@@ -106,6 +108,7 @@
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import { markdownEditor } from 'vue-simplemde'
   import 'github-markdown-css'
+  import globalConfig from '../config/config.js'
 
   export default {
     name: 'NewArticle',
@@ -137,7 +140,8 @@
         inputVisible: false,
         newTag: '',
         dialogTableVisible: false, // 是否显示上传框
-        editor: ''
+        editor: '', // 存储编辑器实例
+        updateImagesUrl: globalConfig.apiUrl + 'updateArticleImage'
       }
     },
     computed: {
@@ -145,8 +149,15 @@
         submission: 'submission',
         newArticle: 'newArticle',
         isLoading: 'isLoading',
-        topbarMobile: 'topbarMobile'
-      })
+        topbarMobile: 'topbarMobile',
+        userInfo: 'userInfo'
+      }),
+      getHeaders () {
+        return {
+          'userid': this.userInfo.userId,
+          'token': this.userInfo.token
+        }
+      }
     },
     methods: {
       ...mapMutations([
@@ -182,6 +193,14 @@
         this.newTag = ''
       },
       hasUploadImage (res, file, fileList) {
+        if (res.state) {
+          this.editor.options.insertTexts.image = ['![](', globalConfig.apiUrl + res.data.url + ')']
+          this.editor.drawImage()
+          this.dialogTableVisible = false
+        }
+        console.log(res)
+        console.log(file)
+        console.log(fileList)
         console.log(123)
       }
     }
