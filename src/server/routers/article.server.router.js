@@ -32,7 +32,7 @@ router
 		
 		let articleListData = {}
 		// 查询符合条件的文章数
-		article.find(searchType).count().exec()
+		article.find(searchType).where({auditStatus: 1}).count().exec()
 			.then(data => {
 				if (data > 0) { // 如果文章数大于0
 					// 根据每页文章数计算总页数
@@ -40,6 +40,7 @@ router
 					// 查询符合条件的文章列表
 					return article
 						.find(searchType)
+						.where({auditStatus: 1})
 						.skip((pageNum - 1) * articleNum)
 						.limit(articleNum)
 						.select('_id title abstract publishTime readTimes aticleCollect likeNum tags')
@@ -58,6 +59,7 @@ router
 				})
 			})
 			.catch(err => {
+				console.log(err)
 				res.send({
 					'state': false,
 					'data': err

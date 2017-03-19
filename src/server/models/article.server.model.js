@@ -12,6 +12,7 @@ var mongoose = require('mongoose')
 // 阅读数
 // 收藏数
 // 点赞数
+// 审核状态
 var articleSchema = new mongoose.Schema({
 	userId: { // 作者id
 		type: mongoose.Schema.Types.ObjectId,
@@ -53,6 +54,10 @@ var articleSchema = new mongoose.Schema({
 		default: 0
 	},
 	likeNum: { // 点赞数
+		type: Number,
+		default: 0
+	},
+	auditStatus: {// 审核状态
 		type: Number,
 		default: 0
 	}
