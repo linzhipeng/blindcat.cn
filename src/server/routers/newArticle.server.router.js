@@ -6,6 +6,9 @@ var userTokenClass = require('../common/userTokenClass.js')
 var mongoose = require('mongoose')
 var Promise = require('bluebird')
 mongoose.Promise = require('bluebird')
+var strip = require('strip-markdown');
+var remark = require('remark');
+var processor = remark().use(strip);
 
 var article = mongoose.model('article')
 
@@ -43,6 +46,20 @@ router
 				return Promise.resolve()
 			})
 			.then(() => {
+				// 提取markdown格式的文章的文字，用于截取摘要
+				var file = processor.process(req.body.content)
+				return file.then()
+			})
+			.then((VFile) => {
+				var saveData = new article({
+					title: req.body.title,
+					content: req.body.content,
+					tags: req.body.tags,
+					articleType: req.body.articleType,
+					creativeType: req.body.creativeType,
+					abstract: stringMaxCut(VFile.contents, 250)
+				})
+				// 裁剪字符串（字符串， 字符数）
 				function stringMaxCut(str, maxNum){
 					var len = 0;
 					for (var i=0; i<str.length; i++) {  
@@ -59,16 +76,6 @@ router
 					};
 					return str;
 				}
-				var reg = /[\\\`\*\_\[\]\#\+\-\!\>]/g;
-				var saveData = new article({
-					title: req.body.title,
-					content: req.body.content,
-					tags: req.body.tags,
-					articleType: req.body.articleType,
-					creativeType: req.body.creativeType,
-					abstract: stringMaxCut(req.body.content.replace(reg, ""), 250)
-				})
-
 				return saveData.save()
 			})
 			.then(data => {

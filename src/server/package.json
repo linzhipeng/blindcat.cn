@@ -17,6 +17,8 @@
     "mongoose": "^4.7.8",
     "multer": "^1.3.0",
     "nodemailer": "^3.1.3",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "remark": "^7.0.0",
+    "strip-markdown": "^3.0.0"
   }
 }
