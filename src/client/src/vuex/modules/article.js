@@ -51,7 +51,6 @@ const actions = {
       .then((res) => {
         if (res && res.data.state) {
           if (res.data.data.listData && res.data.data.listData !== '') {
-            console.log(res.data.data.listData)
             let d = new Date()
             res.data.data.listData.forEach(element => {
               ((element) => {
@@ -70,7 +69,6 @@ const actions = {
         }
       })
       .catch((error) => {
-        console.log(error)
         Notification({
           title: '出错了',
           message: error,
