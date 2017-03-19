@@ -47,7 +47,7 @@ router
 						.exec()
 				} else {
 					articleListData.pageCount = 0
-					return Promise.resolve({})
+					return Promise.resolve('')
 				}
 			})
 			.then(data => {

@@ -48,21 +48,29 @@ const actions = {
       .get(globalConfig.apiUrl + 'article', {
         params: data
       })
-      .then(function (res) {
+      .then((res) => {
         if (res && res.data.state) {
-          // for (let a in res.data.data.listData) {
-          // }
-          let d = new Date()
-          res.data.data.listData.forEach(element => {
-            ((element) => {
-              d.setTime(Date.parse(element.publishTime))
-              element.publishTime = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
-            })(element)
+          if (res.data.data.listData && res.data.data.listData !== '') {
+            console.log(res.data.data.listData)
+            let d = new Date()
+            res.data.data.listData.forEach(element => {
+              ((element) => {
+                d.setTime(Date.parse(element.publishTime))
+                element.publishTime = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
+              })(element)
+            })
+            context.commit('updateList', res.data.data.listData)
+          }
+        } else {
+          Notification({
+            title: '出错了',
+            message: res.data.info,
+            type: 'error'
           })
-          context.commit('updateList', res.data.data.listData)
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
+        console.log(error)
         Notification({
           title: '出错了',
           message: error,
