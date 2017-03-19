@@ -50,6 +50,15 @@ const actions = {
       })
       .then(function (res) {
         if (res && res.data.state) {
+          // for (let a in res.data.data.listData) {
+          // }
+          let d = new Date()
+          res.data.data.listData.forEach(element => {
+            ((element) => {
+              d.setTime(Date.parse(element.publishTime))
+              element.publishTime = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
+            })(element)
+          })
           context.commit('updateList', res.data.data.listData)
         }
       })
@@ -67,6 +76,9 @@ const actions = {
       .get(globalConfig.apiUrl + 'articledetail?id=' + id)
       .then(function (res) {
         if (res && res.data.state) {
+          let d = new Date()
+          d.setTime(Date.parse(res.data.data.publishTime))
+          res.data.data.publishTime = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
           context.commit('updateArticleDetail', res.data.data)
         }
       })
