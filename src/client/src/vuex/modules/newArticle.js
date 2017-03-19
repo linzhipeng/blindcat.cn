@@ -92,7 +92,30 @@ const mutations = {
 const actions = {
   // 提交新文章
   updateNewArticle (context) {
+    let {title, content, tags, articleType, creativeType} = context.getters.newArticle
+    let errMsg = ''
+
     context.commit('isLoading')
+    if (!title || title === '') {
+      errMsg = '文章标题不能为空！'
+    } else if (!content || content === '') {
+      errMsg = '文章正文不能为空！'
+    } else if (!articleType || articleType === '') {
+      errMsg = '文章分类不能为空！'
+    } else if (!creativeType || creativeType === '') {
+      errMsg = '创作类型不能为空！'
+    }
+
+    if (errMsg !== '') {
+      context.commit('notLoading')
+      Notification({
+        title: '出错了',
+        message: errMsg,
+        type: 'error'
+      })
+      return false
+    }
+
     let instance = axios.create({
       headers: {
         'token': context.getters.userInfo.token || '',
@@ -100,11 +123,11 @@ const actions = {
       }
     })
     instance.post(globalConfig.apiUrl + 'newarticle', {
-      title: context.getters.newArticle.title,
-      content: context.getters.newArticle.content,
-      tags: context.getters.newArticle.tags,
-      articleType: context.getters.newArticle.articleType,
-      creativeType: context.getters.newArticle.creativeType
+      title: title,
+      content: content,
+      tags: tags,
+      articleType: articleType,
+      creativeType: creativeType
     })
     .then(function (res) {
       context.commit('notLoading')
