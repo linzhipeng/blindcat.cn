@@ -1,10 +1,10 @@
 <!-- 文章列表 -->
 
 <template>
-  <transition name="article-list">
+  <transition name="article-list" v-if="articleListShow">
     <div id="ArticleList">
       <ul>
-        <li class="one_list" v-for="item in articleList">
+        <li class="one_list" v-for="item in articleList.listData">
           <img class="list_img" src="../assets/blindcat.jpg" alt="">
           <div class="list_text">
             <router-link 
@@ -33,7 +33,16 @@
           </div>
         </li>
       </ul>
-    </div>
+      <div class="pagination_block">
+        <el-pagination
+          layout="prev, pager, next"
+          :page-count="articleList.pageCount"
+          :current-page="articleList.pageNum"
+          class="pagination"
+          @current-change="currentChange"
+        >
+        </el-pagination>
+      </div>
   </transition>
 </template>
 
@@ -43,8 +52,18 @@
     name: 'ArticleList',
     computed: {
       ...mapGetters({
-        articleList: 'articleList'
+        articleList: 'articleList',
+        articleListShow: 'articleListShow'
       })
+    },
+    methods: {
+      currentChange (currentPage) {
+        this.$store.dispatch('getArticleList', {
+          tags: this.articleList.tags,
+          pageNum: currentPage,
+          articleNum: this.articleList.articleNum
+        })
+      }
     },
     created () {
       // 获取指定文章标签的文章列表
@@ -77,6 +96,7 @@
 
   #ArticleList {
     width: 100%;
+    padding-bottom: 60px;
   }
   #ArticleList ul {
     -webkit-padding-start: 0;
@@ -145,5 +165,13 @@
     font-size: 1.3rem;
     line-height: 2rem;
     color: #999;
+  }
+
+  .pagination_block {
+    margin: 40px 0;
+  }
+
+  .pagination {
+    text-align: center;
   }
 </style>

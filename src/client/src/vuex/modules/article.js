@@ -7,12 +7,14 @@ const md = require('markdown-it')()
 const state = {
   // 文章列表
   articleList: '',
-  articleNow: ''
+  articleNow: '',
+  articleListShow: true
 }
 // getters
 const getters = {
   articleList: state => state.articleList,
-  articleNow: state => state.articleNow
+  articleNow: state => state.articleNow,
+  articleListShow: state => state.articleListShow
 }
 // mutations
 const mutations = {
@@ -32,12 +34,18 @@ const mutations = {
   // 清除文章详情缓存
   clearArticleDetail (state) {
     state.articleNow = ''
+  },
+  // 销毁文章列表组件
+  destroyArticleList (state, isShow) {
+    state.articleListShow = isShow
   }
 }
 // actions
 const actions = {
   // 获取文章列表
   getArticleList (context, data) {
+    context.commit('destroyArticleList', false)
+    // data = { tags, pageNum, articleNum }
     context.commit('clearArticleList')
     // 默认 pageNum 为1
     data.pageNum = (data.pageNum && parseInt(data.pageNum) > 0) ? parseInt(data.pageNum) : 1
@@ -49,6 +57,7 @@ const actions = {
         params: data
       })
       .then((res) => {
+        context.commit('destroyArticleList', true)
         if (res && res.data.state) {
           if (res.data.data.listData && res.data.data.listData !== '') {
             let d = new Date()
@@ -58,7 +67,7 @@ const actions = {
                 element.publishTime = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
               })(element)
             })
-            context.commit('updateList', res.data.data.listData)
+            context.commit('updateList', res.data.data)
           }
         } else {
           Notification({
