@@ -68,10 +68,11 @@
 <!-- 添加 "scoped" 属性使该css样式仅作用于该组件 -->
 <style scoped>
   .article-list-enter-active {
-    transition: opacity 1s
+    transition: all 0.8s;
   }
   .article-list-enter {
     opacity: 0;
+    margin-top: 50px;
   }
 
   #ArticleList {

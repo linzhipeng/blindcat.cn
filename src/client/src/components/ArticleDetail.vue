@@ -37,11 +37,11 @@
   }
 
   .article-detail-enter-active {
-    transition: all 1s;
+    transition: all 0.8s;
   }
 
   .article-detail-enter {
     opacity: 0;
-    margin-left: 50px;
+    margin-top: 50px;
   }
 </style>
