@@ -14,6 +14,7 @@
         <router-view name="ArticleDetail"></router-view>
       </div>
     </div>
+    <router-view name="FooterBar"></router-view>
 
     <!-- 左右2列布局 -->
     <!--<div class="main2">

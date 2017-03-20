@@ -14,6 +14,7 @@ const ArticleDetail = resolve => require(['./components/ArticleDetail.vue'], res
 const Register = resolve => require(['./components/Register.vue'], resolve)
 const About = resolve => require(['./components/About.vue'], resolve)
 const UserCenter = resolve => require(['./components/UserCenter.vue'], resolve)
+const FooterBar = resolve => require(['./components/FooterBar.vue'], resolve)
 
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -35,6 +36,7 @@ var routes = [{
   name: 'home',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     ArticleList
   }
@@ -43,6 +45,7 @@ var routes = [{
   name: 'tags',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     ArticleList,
     TagsList
@@ -52,6 +55,7 @@ var routes = [{
   name: 'tags',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     ArticleList,
     TagsList
@@ -61,6 +65,7 @@ var routes = [{
   name: 'tagsPage',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     ArticleList,
     TagsList
@@ -70,6 +75,7 @@ var routes = [{
   name: 'newarticle',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     NewArticle
   }
@@ -78,6 +84,7 @@ var routes = [{
   name: 'about',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     About
   }
@@ -86,6 +93,7 @@ var routes = [{
   name: 'user',
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     Register,
     UserCenter
@@ -96,6 +104,7 @@ var routes = [{
   meta: { scrollToTop: true },
   components: {
     Topbar,
+    FooterBar,
     Siderbar,
     ArticleDetail
   }

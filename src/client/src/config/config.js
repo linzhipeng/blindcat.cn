@@ -6,5 +6,7 @@ export default {
   // 文章配置
   article: {
     articleNum: 10 // 每页文章数
-  }
+  },
+  // 备案号
+  beian: '粤ICP备15083116号-1'
 }
