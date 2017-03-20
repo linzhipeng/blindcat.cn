@@ -39,6 +39,22 @@ export default {
 }
 </script>
 
+<style>
+  ::-webkit-scrollbar {
+      width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+      background-color: #eee;
+      border-radius: 0;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+      background-color: #bbb;
+      border-radius: 0;
+  }
+</style>
+
 <style scoped>
   @import './assets/iconfont/iconfont.css';
   .main1, .main2 {
