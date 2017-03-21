@@ -2,7 +2,6 @@
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
-import { Notification } from 'element-ui'
 const md = require('markdown-it')()
 const state = {
   // 文章列表
@@ -52,7 +51,7 @@ const actions = {
     // 默认 tags 为all
     data.tags = (data.tags && data.tags !== '') ? data.tags : 'all'
     data.articleNum = globalConfig.article.articleNum
-    axios
+    return axios
       .get(globalConfig.apiUrl + 'article', {
         params: data
       })
@@ -70,19 +69,10 @@ const actions = {
             context.commit('updateList', res.data.data)
           }
         } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
+          return new Promise((resolve, reject) => {
+            reject(res.data.info)
           })
         }
-      })
-      .catch((error) => {
-        Notification({
-          title: '出错了',
-          message: error,
-          type: 'error'
-        })
       })
   },
   // 获取指定文章id的文章详情

@@ -48,6 +48,7 @@
 
 <script type="text/javascript">
   import { mapGetters } from 'vuex'
+  import { Notification } from 'element-ui'
   export default {
     name: 'ArticleList',
     computed: {
@@ -62,6 +63,12 @@
           tags: this.articleList.tags,
           pageNum: currentPage,
           articleNum: this.articleList.articleNum
+        }).catch((error) => {
+          Notification({
+            title: '出错了',
+            message: error,
+            type: 'error'
+          })
         })
       }
     },
@@ -70,6 +77,12 @@
       this.$store.dispatch('getArticleList', {
         'tags': this.$route.params.tags,
         'pageNum': this.$route.params.pageNum || 1
+      }).catch((error) => {
+        Notification({
+          title: '出错了',
+          message: error,
+          type: 'error'
+        })
       })
     },
     watch: {
@@ -78,6 +91,12 @@
         this.$store.dispatch('getArticleList', {
           'tags': to.params.tags,
           'pageNum': to.params.pageNum || 1
+        }).catch((error) => {
+          Notification({
+            title: '出错了',
+            message: error,
+            type: 'error'
+          })
         })
       }
     }
