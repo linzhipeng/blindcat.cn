@@ -171,9 +171,49 @@
         'removeTag'
       ]),
       ...mapActions([
-        'updateNewArticle',
         'logout'
       ]),
+      // 提交文章到服务器进行投稿
+      updateNewArticle () {
+        this.$store.dispatch('updateNewArticle')
+          .then(res => {
+            this.$store.commit('notLoading')
+            if (res && res.data) {
+              if (res.data.state) {
+                Notification({
+                  title: '成功',
+                  message: '投稿成功！',
+                  type: 'success'
+                })
+              } else {
+                Notification({
+                  title: '出错了',
+                  message: res.data.info,
+                  type: 'error'
+                })
+              }
+            }
+          })
+          .catch(error => {
+            this.$store.commit('notLoading')
+            if (error.response) {
+              if (error.response.status === 403) {
+                this.$store.commit('logout')
+                Notification({
+                  title: '出错了',
+                  message: error.response.data.info,
+                  type: 'error'
+                })
+              }
+            } else {
+              Notification({
+                title: '出错了',
+                message: error,
+                type: 'error'
+              })
+            }
+          })
+      },
       // 记录键入的新文章元素
       recordNewArticle (name, value) {
         this.$store.commit('recordNewArticle', {

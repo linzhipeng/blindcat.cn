@@ -2,7 +2,6 @@
 
 import globalConfig from '../../config/config.js'
 import axios from 'axios'
-import { Notification } from 'element-ui'
 const state = {
   // 文章投稿选项
   submission: {
@@ -107,13 +106,9 @@ const actions = {
     }
 
     if (errMsg !== '') {
-      context.commit('notLoading')
-      Notification({
-        title: '出错了',
-        message: errMsg,
-        type: 'error'
+      return new Promise((resolve, reject) => {
+        reject(errMsg)
       })
-      return false
     }
 
     let instance = axios.create({
@@ -122,49 +117,12 @@ const actions = {
         'userid': context.getters.userInfo.userId || ''
       }
     })
-    instance.post(globalConfig.apiUrl + 'newarticle', {
+    return instance.post(globalConfig.apiUrl + 'newarticle', {
       title: title,
       content: content,
       tags: tags,
       articleType: articleType,
       creativeType: creativeType
-    })
-    .then(function (res) {
-      context.commit('notLoading')
-      if (res && res.data) {
-        if (res.data.state) {
-          Notification({
-            title: '成功',
-            message: '投稿成功！',
-            type: 'success'
-          })
-        } else {
-          Notification({
-            title: '出错了',
-            message: res.data.info,
-            type: 'error'
-          })
-        }
-      }
-    })
-    .catch(function (error) {
-      context.commit('notLoading')
-      if (error.response) {
-        if (error.response.status === 403) {
-          context.commit('logout')
-          Notification({
-            title: '出错了',
-            message: error.response.data.info,
-            type: 'error'
-          })
-        }
-      } else {
-        Notification({
-          title: '出错了',
-          message: error.message,
-          type: 'error'
-        })
-      }
     })
   }
 }
