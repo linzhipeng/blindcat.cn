@@ -20,6 +20,7 @@ router
 		if (req.query.id && req.query.id !== ''){
 			article
 				.findOne({'_id': req.query.id})
+				.populate('writer', '_id username account.email')
 				.exec()
 				.then(data => {
 					res.send({

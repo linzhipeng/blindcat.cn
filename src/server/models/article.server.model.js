@@ -14,7 +14,7 @@ var mongoose = require('mongoose')
 // 点赞数
 // 审核状态
 var articleSchema = new mongoose.Schema({
-	userId: { // 作者id
+	writer: { // 作者id
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user'
 	},
