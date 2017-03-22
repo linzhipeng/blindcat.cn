@@ -45,9 +45,10 @@ router
 						.find(searchType)
 						.where({auditStatus: 1})
 						.skip((pageNum - 1) * articleNum)
+						.select('_id title abstract publishTime readTimes aticleCollect likeNum tags writer')
 						.limit(articleNum)
-						.select('_id title abstract publishTime readTimes aticleCollect likeNum tags')
 						.sort([['publishTime', -1]])
+						.populate('writer', '_id username account.email')
 						.exec()
 				} else {
 					articleListData.pageCount = 0
@@ -65,7 +66,6 @@ router
 				})
 			})
 			.catch(err => {
-				console.log(err)
 				res.send({
 					'state': false,
 					'data': err
