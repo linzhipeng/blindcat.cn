@@ -22,11 +22,13 @@ router
 		// pageNum  —— 第几页（默认1）
 		// articleNum  —— 每页规定文章数（默认10）
 		// tags  ——文章标签（all表示全部文章）
+		// writerId ——作者Id，使用作者Id查询文章列表时不得为空
 		let {searchType = "tags", pageNum = 1, articleNum = 10, tags = 'all', writerId = ''} = req.query
-		if (!writerId.match(/^[0-9a-fA-F]{24}$/)) {
+		// 如果查询类型为writer而作者Id格式不符合，则返回错误
+		if (!writerId.match(/^[0-9a-fA-F]{24}$/) && searchType === 'writer') {
 			res.send({
 				'state': false,
-				'data': '请输入正确的作者Id'
+				'info': '请输入正确的作者Id'
 			})
 			return false
 		}
@@ -79,6 +81,7 @@ router
 				})
 			})
 			.catch(err => {
+				console.log()
 				res.send({
 					'state': false,
 					'data': err
