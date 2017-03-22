@@ -6,6 +6,7 @@ const md = require('markdown-it')()
 const state = {
   // 文章列表
   articleList: '',
+  // 文章详情
   articleNow: '',
   articleListShow: true
 }

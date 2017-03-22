@@ -96,6 +96,18 @@ var routes = [{
     FooterBar,
     Siderbar,
     Register,
+    'UserArticleList': ArticleList,
+    UserCenter
+  }
+}, {
+  path: '/user/:pageNum',
+  name: 'user',
+  components: {
+    Topbar,
+    FooterBar,
+    Siderbar,
+    Register,
+    'UserArticleList': ArticleList,
     UserCenter
   }
 }, {

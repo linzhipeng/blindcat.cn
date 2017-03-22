@@ -75,6 +75,7 @@ router
 				articleListData.pageNum = pageNum // 总页数
 				articleListData.articleNum = articleNum // 总文章数
 				articleListData.tags = tags // 查询标签
+				articleListData.searchType = searchType // 搜索类型
 				res.send({
 					'state': true,
 					'data': articleListData

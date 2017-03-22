@@ -54,49 +54,81 @@
     computed: {
       ...mapGetters({
         articleList: 'articleList',
-        articleListShow: 'articleListShow'
+        articleListShow: 'articleListShow',
+        userInfo: 'userInfo'
       })
     },
     methods: {
-      currentChange (currentPage) {
-        this.$store.dispatch('getArticleList', {
-          tags: this.articleList.tags,
-          pageNum: currentPage,
-          articleNum: this.articleList.articleNum
-        }).catch((error) => {
+      getArticleList (params) {
+        // 对象解构赋值
+        // ================ params ==================
+        // searchType  ——查询类型（tags：按标签查，writer：按作者Id查）（默认tags）
+        // pageNum  —— 第几页（默认1）
+        // articleNum  —— 每页规定文章数（默认10）
+        // tags  ——文章标签（all表示全部文章）
+        // writerId ——作者Id，使用作者Id查询文章列表时不得为空
+        let {searchType = 'tags', pageNum = 1, articleNum = 10, tags = 'all', writerId = this.userInfo.userId} = params
+        // 转为整型、正整数
+        pageNum = (parseInt(pageNum) > 0) ? parseInt(pageNum) : 1
+        articleNum = (parseInt(articleNum) > 0) ? parseInt(articleNum) : 10
+        // 如果查询类型为writer而作者Id格式不符合，则返回错误
+        if (!writerId.match(/^[0-9a-fA-F]{24}$/) && searchType === 'writer') {
+          Notification({
+            title: '出错了',
+            message: '作者Id错误',
+            type: 'error'
+          })
+          return false
+        }
+
+        let artcleParams = {
+          'pageNum': pageNum,
+          'articleNum': articleNum,
+          'searchType': searchType
+        }
+
+        if (searchType === 'writer') {
+          artcleParams.writerId = writerId
+        } else {
+          artcleParams.tags = tags
+        }
+        this.$store.dispatch('getArticleList', artcleParams).catch((error) => {
           Notification({
             title: '出错了',
             message: error,
             type: 'error'
           })
+        })
+      },
+      currentChange (currentPage) {
+        this.getArticleList({
+          tags: this.articleList.tags,
+          pageNum: currentPage,
+          articleNum: this.articleList.articleNum,
+          searchType: this.articleList.searchType
         })
       }
     },
     created () {
-      // 获取指定文章标签的文章列表
-      this.$store.dispatch('getArticleList', {
-        'tags': this.$route.params.tags,
-        'pageNum': this.$route.params.pageNum || 1
-      }).catch((error) => {
-        Notification({
-          title: '出错了',
-          message: error,
-          type: 'error'
+      let routeName = this.$route.name
+      if (routeName === 'user') {
+        this.getArticleList({
+          'searchType': 'writer',
+          'pageNum': this.$route.params.pageNum || 1,
+          'writerId': this.userInfo.userId
         })
-      })
+      } else {
+        this.getArticleList({
+          'tags': this.$route.params.tags,
+          'pageNum': this.$route.params.pageNum || 1
+        })
+      }
     },
     watch: {
       '$route' (to, from) {
-        // 对该组件路由变化作出响应...
-        this.$store.dispatch('getArticleList', {
+        this.getArticleList({
           'tags': to.params.tags,
           'pageNum': to.params.pageNum || 1
-        }).catch((error) => {
-          Notification({
-            title: '出错了',
-            message: error,
-            type: 'error'
-          })
         })
       }
     }

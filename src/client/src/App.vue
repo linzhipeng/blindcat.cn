@@ -9,9 +9,17 @@
         <router-view name="ArticleList"></router-view>
         <router-view name="Register" v-if="!hasLogin"></router-view>
         <router-view name="About"></router-view>
-        <router-view name="UserCenter" v-if="hasLogin"></router-view>
         <router-view name="NewArticle"></router-view>
         <router-view name="ArticleDetail"></router-view>
+        <el-row>
+          <el-col :xs="24" :sm="5" :md="5" :lg="5">
+            <router-view name="UserCenter" v-if="hasLogin"></router-view>
+          </el-col>
+
+          <el-col :xs="24" :sm="19" :md="19" :lg="19">
+            <router-view name="UserArticleList"></router-view>
+          </el-col>
+        </el-row>
       </div>
     </div>
     <router-view name="FooterBar"></router-view>
