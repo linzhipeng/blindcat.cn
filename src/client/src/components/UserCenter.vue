@@ -1,24 +1,42 @@
 <template>
   <div>
-    <my-upload
-      field="avatar"
-      v-model="show"
-      @crop-success="cropSuccess"
-      @crop-upload-success="cropUploadSuccess"
-      @crop-upload-fail="cropUploadFail"
-      :width="250"
-      :height="250"
-      :url="updateAvatarUrl"
-      :headers="getHeaders"
-      img-format="png"
-      class="avatar_clip"
-    ></my-upload>
-    <div class="avatar" @click="toggleShow">
-      <img :src="apiUrl + userInfo.avatar">
-      <i class="el-icon-edit mask"></i>
-    </div>
-    <h1>欢迎你！{{userInfo.username}}</h1>
-    <el-button type="primary" @click="logout">退出登录</el-button>
+    <el-row>
+      <el-col :xs="24" :sm="5" :md="5" :lg="5">
+        <my-upload
+          field="avatar"
+          v-model="show"
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
+          :width="250"
+          :height="250"
+          :url="updateAvatarUrl"
+          :headers="getHeaders"
+          img-format="png"
+          class="avatar_clip"
+        ></my-upload>
+        <div class="avatar" @click="toggleShow">
+          <img :src="apiUrl + userInfo.avatar">
+          <i class="el-icon-edit mask"></i>
+        </div>
+        <div class="user_box">
+          <h1 class="user_name">{{userInfo.username}}</h1>
+          <p><b>邮箱：</b>{{userInfo.account.email}}</p>
+          <p><b>签名：</b>{{userInfo.userIntro}}</p>
+
+          <el-button
+            :plain="true"
+            type="danger"
+            size="small"
+            @click="logout"
+          >退出登录</el-button>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="19" :md="19" :lg="19">
+        {{ userInfo }}
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -92,6 +110,10 @@
   .avatar {
     width: 150px;
     height: 150px;
+    -webkit-box-shadow: 0 0 8px 2px #999;
+    box-shadow: 0 0 8px 2px #999;
+    border-radius: 75px;
+    overflow: hidden;
     position: relative;
     cursor: pointer;
   }
@@ -119,8 +141,28 @@
     height: 100%;
   }
 
+  .avatar {
+    margin: 10px auto;
+  }
+
   .avatar_clip.vue-image-crop-upload .vicp-wrap {
     max-width: 600px;
     width: 80%;
+  }
+
+  .user_box {
+    margin-top: 30px;
+    padding-left: 15px;
+  }
+
+  .user_name {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .user_box p {
+    display: block;
+    font-size: 1.3rem;
   }
 </style>
