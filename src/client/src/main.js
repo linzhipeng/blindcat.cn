@@ -41,6 +41,16 @@ var routes = [{
     ArticleList
   }
 }, {
+  path: '/all/:pageNum',
+  exact: true,
+  name: 'allArticle',
+  components: {
+    Topbar,
+    FooterBar,
+    Siderbar,
+    ArticleList
+  }
+}, {
   path: '/tags',
   name: 'tags',
   components: {
@@ -51,18 +61,8 @@ var routes = [{
     TagsList
   }
 }, {
-  path: '/tags/:tags',
-  name: 'tags',
-  components: {
-    Topbar,
-    FooterBar,
-    Siderbar,
-    ArticleList,
-    TagsList
-  }
-}, {
   path: '/tags/:tags/:pageNum',
-  name: 'tagsPage',
+  name: 'tagsSearch',
   components: {
     Topbar,
     FooterBar,
@@ -101,7 +101,7 @@ var routes = [{
   }
 }, {
   path: '/user/:pageNum',
-  name: 'user',
+  name: 'userArticle',
   components: {
     Topbar,
     FooterBar,

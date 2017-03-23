@@ -61,7 +61,7 @@ let searchArticle = function (searchQuery, pageNum, articleNum, searchType, res)
 		.catch(e => {
 			res.send({
 				state: false,
-				data: e
+				info: e
 			})
 		})
 }

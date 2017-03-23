@@ -8,13 +8,21 @@ const state = {
   articleList: '',
   // 文章详情
   articleNow: '',
-  articleListShow: true
+  // 是否显示文章列表组件
+  articleListShow: true,
+  // 文章列表查询query
+  articleListQuery: {
+    pageNum: '',
+    searchType: '',
+    queryData: ''
+  }
 }
 // getters
 const getters = {
   articleList: state => state.articleList,
   articleNow: state => state.articleNow,
-  articleListShow: state => state.articleListShow
+  articleListShow: state => state.articleListShow,
+  articleListQuery: state => state.articleListQuery
 }
 // mutations
 const mutations = {
@@ -38,6 +46,10 @@ const mutations = {
   // 销毁文章列表组件
   destroyArticleList (state, isShow) {
     state.articleListShow = isShow
+  },
+  // 更新articleListQuery
+  updateArticleListQuery (state, articleListQuery) {
+    state.articleListQuery = articleListQuery
   }
 }
 // actions
@@ -56,6 +68,7 @@ const actions = {
     data.searchType = data.searchType ? data.searchType : ''
     // 默认 queryData 为 'all'
     data.queryData = data.queryData ? data.queryData : 'all'
+    context.commit('updateArticleListQuery', data)
     // 文章列表查询query
     let queryData = {
       pageNum: data.pageNum,
@@ -92,6 +105,7 @@ const actions = {
         context.commit('destroyArticleList', true)
         if (res && res.data.state) {
           if (res.data.data.listData && res.data.data.listData !== '') {
+            // 将时间转换成合适的格式
             let d = new Date()
             res.data.data.listData.forEach(element => {
               ((element) => {

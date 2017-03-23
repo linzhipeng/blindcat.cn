@@ -3,19 +3,19 @@
 <template>
   <div id="TagsList">
     <div class="tags_div">
-      <router-link to="/tags/散文">散文</router-link>
-      <router-link to="/tags/css">css</router-link>
-      <router-link to="/tags/测试">测试</router-link>
-      <router-link to="/tags/Vue">Vue</router-link>
-      <router-link to="/tags/前端">前端</router-link>
-      <router-link to="/tags/框架">框架</router-link>
-      <router-link to="/tags/node">node</router-link>
-      <router-link to="/tags/JavaScript">JavaScript</router-link>
-      <router-link to="/tags/数据结构">数据结构</router-link>
-      <router-link to="/tags/React">React</router-link>
-      <router-link to="/tags/Angular">Angular</router-link>
-      <router-link to="/tags/开源">开源</router-link>
-      <router-link to="/tags/webpack">webpack</router-link>
+      <router-link to="/tags/散文/1">散文</router-link>
+      <router-link to="/tags/css/1">css</router-link>
+      <router-link to="/tags/测试/1">测试</router-link>
+      <router-link to="/tags/Vue/1">Vue</router-link>
+      <router-link to="/tags/前端/1">前端</router-link>
+      <router-link to="/tags/框架/1">框架</router-link>
+      <router-link to="/tags/node/1">node</router-link>
+      <router-link to="/tags/JavaScript/1">JavaScript</router-link>
+      <router-link to="/tags/数据结构/1">数据结构</router-link>
+      <router-link to="/tags/React/1">React</router-link>
+      <router-link to="/tags/Angular/1">Angular</router-link>
+      <router-link to="/tags/开源/1">开源</router-link>
+      <router-link to="/tags/webpack/1">webpack</router-link>
     </div>
   </div>
 </template>

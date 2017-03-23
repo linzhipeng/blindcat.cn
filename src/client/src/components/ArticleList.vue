@@ -55,7 +55,8 @@
       ...mapGetters({
         articleList: 'articleList',
         articleListShow: 'articleListShow',
-        userInfo: 'userInfo'
+        userInfo: 'userInfo',
+        articleListQuery: 'articleListQuery'
       })
     },
     methods: {
@@ -78,41 +79,37 @@
           })
         })
       },
+      // 根据页码变化进行router切换
       currentChange (currentPage) {
-        this.getArticleList({
-          tags: this.articleList.tags,
-          pageNum: currentPage,
-          articleNum: this.articleList.articleNum,
-          searchType: this.articleList.searchType
-        })
-      }
-    },
-    created () {
-      let routeName = this.$route.name
-      if (routeName === 'user') {
-        let pageNum = this.$route.params.pageNum || 1
-        this.getArticleList('writer', this.userInfo.userId, pageNum)
-      } else if (routeName === 'tags') {
-        let pageNum = this.$route.params.pageNum || 1
-        this.getArticleList('tags', this.$route.params.tags, pageNum)
-      } else {
-        let pageNum = this.$route.params.pageNum || 1
-        this.getArticleList('all', '', pageNum)
-      }
-    },
-    watch: {
-      '$route' (to, from) {
-        let routeName = to.name
-        if (routeName === 'user') {
+        if (this.$route.name === 'tagsSearch' || this.$route.name === 'tags') {
+          this.$router.push({name: 'tagsSearch', params: { pageNum: currentPage }})
+        } else if (this.$route.name === 'home' || this.$route.name === 'allArticle') {
+          this.$router.push({name: 'allArticle', params: { pageNum: currentPage }})
+        } else if (this.$route.name === 'user' || this.$route.name === 'userArticle') {
+          this.$router.push({name: 'userArticle', params: { pageNum: currentPage }})
+        }
+      },
+      // 根据router切换更新文章列表数据
+      routerChange () {
+        let routeName = this.$route.name
+        if (routeName === 'user' || routeName === 'userArticle') {
           let pageNum = this.$route.params.pageNum || 1
           this.getArticleList('writer', this.userInfo.userId, pageNum)
-        } else if (routeName === 'tags') {
+        } else if (routeName === 'tags' || routeName === 'tagsSearch') {
           let pageNum = this.$route.params.pageNum || 1
           this.getArticleList('tags', this.$route.params.tags, pageNum)
-        } else {
+        } else if (routeName === 'home' || routeName === 'allArticle') {
           let pageNum = this.$route.params.pageNum || 1
           this.getArticleList('all', '', pageNum)
         }
+      }
+    },
+    created () {
+      this.routerChange()
+    },
+    watch: {
+      '$route' (to, from) {
+        this.routerChange()
       }
     }
   }
