@@ -18,7 +18,7 @@
                 <i class="iconfont icon-time"></i>{{ item.publishTime }}
               </div>
               <div class="tip_btn">
-                <i class="iconfont icon-myshape"></i>瞎猫
+                <i class="iconfont icon-myshape"></i>{{ item.writer.username }}
               </div>
               <div class="tip_btn">
                 <i class="iconfont icon-information"></i>23
