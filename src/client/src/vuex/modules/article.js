@@ -43,18 +43,50 @@ const mutations = {
 // actions
 const actions = {
   // 获取文章列表
-  getArticleList (context, data) {
-    context.commit('destroyArticleList', false)
-    // data = { tags, pageNum, articleNum }
-    context.commit('clearArticleList')
+  getArticleList (context, data) { // data = { pageNum, searchType, queryData }
+    // 如果查询类型为writer而作者Id格式不符合，则返回错误
+    if (!data.queryData.match(/^[0-9a-fA-F]{24}$/) && data.searchType === 'writer') {
+      return new Promise((resolve, reject) => {
+        reject('作者Id错误')
+      })
+    }
     // 默认 pageNum 为1
     data.pageNum = (data.pageNum && parseInt(data.pageNum) > 0) ? parseInt(data.pageNum) : 1
-    // 默认 tags 为all
-    data.tags = (data.tags && data.tags !== '') ? data.tags : 'all'
-    data.articleNum = globalConfig.article.articleNum
+    // 默认 searchType 为 ''
+    data.searchType = data.searchType ? data.searchType : ''
+    // 默认 queryData 为 'all'
+    data.queryData = data.queryData ? data.queryData : 'all'
+    // 文章列表查询query
+    let queryData = {
+      pageNum: data.pageNum,
+      articleNum: globalConfig.article.articleNum
+    }
+    // 文章列表查询 url
+    let queryUrl = ''
+    switch (data.searchType) {
+      case 'writer':
+        queryUrl = '/writer'
+        queryData.writerId = data.queryData
+        break
+      case 'tags':
+        queryUrl = '/tags'
+        queryData.tags = data.queryData
+        break
+      case 'all':
+        break
+      default:
+        return new Promise((resolve, reject) => {
+          reject('文章列表查询参数错误')
+        })
+    }
+    // 销毁文章列表组件
+    context.commit('destroyArticleList', false)
+    // 清除文章数据缓存
+    context.commit('clearArticleList')
+
     return axios
-      .get(globalConfig.apiUrl + 'article', {
-        params: data
+      .get(globalConfig.apiUrl + 'article' + queryUrl, {
+        params: queryData
       })
       .then((res) => {
         context.commit('destroyArticleList', true)
