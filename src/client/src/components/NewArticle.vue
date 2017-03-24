@@ -294,6 +294,10 @@
   .upload-demo .el-dragger  {
     width: 100%;
   }
+
+  .markdown-editor .CodeMirror, .markdown-editor .CodeMirror-scroll {
+    max-height: 450px;
+  }
 </style>
 
 <style scoped>
