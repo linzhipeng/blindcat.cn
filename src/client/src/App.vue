@@ -11,9 +11,9 @@
         <router-view name="About"></router-view>
         <router-view name="NewArticle"></router-view>
         <router-view name="ArticleDetail"></router-view>
-        <el-row>
+        <el-row v-if="hasLogin">
           <el-col :xs="24" :sm="5" :md="5" :lg="5">
-            <router-view name="UserCenter" v-if="hasLogin"></router-view>
+            <router-view name="UserCenter"></router-view>
           </el-col>
 
           <el-col :xs="24" :sm="19" :md="19" :lg="19">
