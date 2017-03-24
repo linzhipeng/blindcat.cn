@@ -14,31 +14,36 @@ var router = express.Router()
 
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-var data
+
 router
 	.get('/', function(req, res){
-		if (req.query.id && req.query.id !== ''){
-			article
-				.findOne({'_id': req.query.id})
-				.populate('writer', '_id username account.email')
-				.exec()
-				.then(data => {
-					res.send({
-						'state': true,
-						'data': data
-					})
-				})
-				.catch (e => {
-					res.send({
-						'state': false,
-						'info': e
-					})
-				})
-		} else {
-			res.send({
+		let writerId = req.query.id
+		if (!writerId || writerId === '') {
+			return res.send({
 				'state': false,
 				'info': '未收到请求id'
 			})
+		} else if (!writerId.match(/^[0-9a-fA-F]{24}$/)) {
+			return res.send({
+				'state': false,
+				'info': '用户id格式错误'
+			})
 		}
+		article
+			.findOne({'_id': req.query.id})
+			.populate('writer', '_id username account.email')
+			.exec()
+			.then(data => {
+				res.send({
+					'state': true,
+					'data': data
+				})
+			})
+			.catch (e => {
+				res.send({
+					'state': false,
+					'info': e
+				})
+			})
 	})
 module.exports = router
