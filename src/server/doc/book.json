@@ -1,0 +1,15 @@
+{
+    "plugins": [
+        "api",
+        "highlight"
+    ],
+    "pluginsConfig": {
+        "api": {
+            "url": "http://api.blindcat.cn",
+            "headers": {
+
+            },
+            "explore": true
+        }
+    }
+}
