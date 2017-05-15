@@ -24,7 +24,8 @@ var articleSchema = new mongoose.Schema({
 		required: true
 	},
 	preview: { // 文章预览图
-		type: String
+		type: String,
+		default: 'http://api.blindcat.cn/static/images/blindcat.jpg'
 	},
 	content: { // 文章内容
 		type: String,

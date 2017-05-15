@@ -5,7 +5,7 @@
     <div id="ArticleList">
       <ul>
         <li class="one_list" v-for="item in articleList.listData">
-          <img class="list_img" src="../assets/blindcat.jpg" alt="">
+          <img class="list_img" :src="item.preview" alt="">
           <div class="list_text">
             <router-link 
               :to="'/articledetail/' + item._id" 
