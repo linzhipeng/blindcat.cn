@@ -2,6 +2,7 @@
 var mongoose = require('mongoose')
 // 作者id
 // 文章标题
+// 文章预览图
 // 文章内容
 // 文章标签
 // 创作类型
@@ -21,6 +22,9 @@ var articleSchema = new mongoose.Schema({
 	title: { // 文章标题
 		type: String,
 		required: true
+	},
+	preview: { // 文章预览图
+		type: String
 	},
 	content: { // 文章内容
 		type: String,

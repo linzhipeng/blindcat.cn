@@ -54,6 +54,7 @@ router
 				var saveData = new article({
 					writer: userId,
 					title: req.body.title,
+					preview: req.body.preview || '',
 					content: req.body.content,
 					tags: req.body.tags,
 					articleType: req.body.articleType,
